@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Delete Product{% endblock %}
+{% block content %}
+
+<main class="main">
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+    <div class="container position-relative">
+      <br><br><br>
+      <h1>Delete Product</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="current">Delete Product</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <section class="starter-section section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Are You Sure?</h2>
+      <p>Are you sure you want to delete <strong>{{ object.product_name }}</strong>? This action cannot be undone.</p>
+    </div>
+
+    <div class="container text-center" data-aos="fade-up">
+      <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Product</button>
+        <a href="{% url 'product_list' %}" class="btn btn-secondary">Cancel</a>
+      </form>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

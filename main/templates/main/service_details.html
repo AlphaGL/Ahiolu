@@ -1,0 +1,161 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}{{ service.service_name }} - Service Details{% endblock %}
+
+{% block content %}
+
+<!-- Page Title -->
+<div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+  <div class="container position-relative">
+    <br><br><br>
+    <h1>{{ service.service_name }}</h1>
+    <p>Professional and reliable services tailored to your needs.</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'service_list' %}">Services</a></li>
+        <li class="current">{{ service.service_name }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!-- End Page Title -->
+
+<!-- Service Details Section -->
+<section id="service-details" class="service-details section">
+  <div class="container">
+    <div class="row gy-4">
+
+          <!-- Sidebar with Services List -->
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="services-list">
+              <strong>Other Services Offered</strong>
+              <a class="active">{{ service.other_service_a}}</a>
+              <a class="active">{{ service.other_service_b }}</a>
+              <a class="active">{{ service.other_service_c }}</a>
+            </div>
+
+        <h4>About the Service Provider</h4>
+        <p><strong>Name:</strong> {{ service.service_provider_name }} 
+          <!-- {% if service.is_verified %} -->
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+              </svg>
+            </span>
+          <!-- {% endif %} -->
+        </p>
+        <p><strong>Expertise:</strong> {{ service.service_provider_expertise }}</p>
+        <p><strong>Experience:</strong> {{ service.service_provider_experience_year }} year(s)</p>
+        <p><strong>State:</strong> {{ service.service_state }}</p>
+        <p><strong>City:</strong> {{ service.service_city }}</p>
+        {% if user.is_authenticated %}
+        <p><strong>Contact:</strong> {{ service.service_provider_email }}</p>
+        {% endif %}
+        <p><strong>Overall Rating:</strong> ⭐ {{ service.average_rating|default:"No Rating" }}/5
+        <span class="text-muted small ms-2">({{ service.service_ratings.count|default:0 }} Reviews)</span>
+        </p>
+      </div>
+
+      <!-- Main Content Section -->
+      <div class="col-lg-8 service-details-container mx-auto" data-aos="fade-up" data-aos-delay="200">
+        <!-- Service Image -->
+        <div class="service-main-image">
+          <img src="{{ service.image.url }}" alt="{{ service.title }}" class="img-fluid rounded shadow-sm">
+        </div>
+
+        <!-- Service Name & Description -->
+        <div class="service-info mt-3 text-center">
+          <h3 class="text-primary fw-bold">{{ service.service_name }}</h3>
+          <p class="text-muted small">{{ service.service_description }}</p>
+        </div>
+
+        <!-- Additional Images -->
+        <div class="service-images mt-3 text-center">
+          <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="img-thumbnail" style="max-width: 250px;">
+        </div>
+
+        <!-- How to Get Started -->
+        <div class="get-started mt-3">
+          <h5 class="fw-bold text-center">How to Get Started</h5>
+          <p class="text-muted small text-center">Reach out via email or contact us directly. We offer the best quality services.</p>
+        </div>
+
+        <!-- Show Contact Button -->
+        <div class="contact-section text-center mt-3">
+          <button id="showContactBtn" class="btn btn-primary btn-sm px-4">Show Contact</button>
+          <!-- Hidden Contact Information -->
+          <div id="contactInfo" class="contact-info mt-2 p-2 bg-light border rounded text-center small" style="display: none;">
+            {% if user.is_authenticated %}
+            <p class="fw-bold text-dark mb-1">📞 {{ service.service_provider_phone }}</p>
+            <p class="fw-bold text-dark mb-0">📧 {{ service.service_provider_email }}</p>
+            {% else %}
+            <p class="text-danger fw-bold">You must be logged in to view contact details.</p>
+            <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
+              🔐 Login to Continue
+            </a>
+            {% endif %}
+          </div>
+          
+        </div>
+
+      <!-- JavaScript to Toggle Contact Info -->
+      <script>
+        document.getElementById("showContactBtn").addEventListener("click", function() {
+          var contactDiv = document.getElementById("contactInfo");
+          
+          if (contactDiv.style.display === "none") {
+            contactDiv.style.display = "block";
+            this.innerText = "Hide Contact";
+          } else {
+            contactDiv.style.display = "none";
+            this.innerText = "Show Contact";
+          }
+        });
+      </script>
+
+      <!-- Custom Styling -->
+      <style>
+        .service-details-container {
+          background: #fff;
+          padding: 15px;
+          border-radius: 8px;
+          box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+          max-width: 550px;
+        }
+
+        .service-main-image img {
+          width: 100%;
+          height: auto;
+          border-radius: 8px;
+        }
+
+        .service-images img {
+          max-width: 200px;
+          height: auto;
+          border-radius: 6px;
+        }
+
+        .contact-section .btn {
+          font-size: 0.9rem;
+          padding: 8px 16px;
+        }
+
+        .contact-info p {
+          font-size: 0.85rem;
+        }
+
+        .contact-buttons .btn {
+          font-size: 0.85rem;
+          padding: 6px 12px;
+        }
+      </style>
+
+
+    </div>
+  </div>
+</section>
+<!-- /Service Details Section -->
+
+{% endblock %}

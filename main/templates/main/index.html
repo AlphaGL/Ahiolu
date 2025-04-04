@@ -1,0 +1,191 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section dark-background">
+
+  <img src="{% static 'assets/img/hero-bg.jpg' %}" alt="" data-aos="fade-in">
+
+  <div class="container d-flex flex-column align-items-center">
+    <h2 data-aos="fade-up" data-aos-delay="100">QUALITY PRODUCTS. EXPERT SERVICE.</h2>
+    <p data-aos="fade-up" data-aos-delay="200">Your one-stop hub for premium products and expert services.</p>
+    <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+      <a href="{% url 'product_list' %}" class="btn-get-started">Shop Products</a>
+      <a href="{% url 'service_list' %}" class="btn-watch-video d-flex align-items-center"><i class="bi bi-tools"></i><span>Book Services</span></a>
+    </div>
+  </div>
+
+</section><!-- /Hero Section -->
+
+<!-- Premium Mechanical Services Section -->
+<section id="services" class="services section">
+
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Premium Mechanical Services</h2>
+    <p style="font-size: 20px;">Expert Repairs & Maintenance for Cars, Air Conditioners, and More</p>
+  </div><!-- End Section Title -->
+
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row gy-5">
+
+      <!-- Service Item 1: Engine Diagnostics (Cars) -->
+      <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+        <div class="service-item">
+          <div class="img">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="Engine Diagnostics">
+          </div>
+          <div class="details position-relative">
+            <div class="icon">
+              <i class="bi bi-speedometer2"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+              <h3>Car Engine Diagnostics</h3>
+            </a>
+            <p>Advanced scanning and troubleshooting for smooth engine performance.</p>
+            <p><strong>⭐ 4.8/5 (1.2K Reviews)</strong></p>
+            <p><i class="bi bi-geo-alt"></i> Available in Lagos, Abuja & Port Harcourt</p>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <!-- Service Item 2: Air Conditioner Repairs -->
+      <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="service-item">
+          <div class="img">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="Air Conditioner Repair">
+          </div>
+          <div class="details position-relative">
+            <div class="icon">
+              <i class="bi bi-wind"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+              <h3>Air Conditioner Servicing</h3>
+            </a>
+            <p>Installation, gas refilling, and maintenance for all AC models.</p>
+            <p><strong>⭐ 4.9/5 (980 Reviews)</strong></p>
+            <p><i class="bi bi-geo-alt"></i> Available in Lagos, Kano & Ibadan</p>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+      <!-- Service Item 3: Generator Repairs -->
+      <div class="col-xl-4 col-md-6" data-aos="zoom-in" data-aos-delay="400">
+        <div class="service-item">
+          <div class="img">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="Generator Repair">
+          </div>
+          <div class="details position-relative">
+            <div class="icon">
+              <i class="bi bi-lightning"></i>
+            </div>
+            <a href="service-details.html" class="stretched-link">
+              <h3>Generator Repairs</h3>
+            </a>
+            <p>Complete servicing for petrol and diesel generators of all sizes.</p>
+            <p><strong>⭐ 4.7/5 (760 Reviews)</strong></p>
+            <p><i class="bi bi-geo-alt"></i> Available in Lagos, Enugu & Owerri</p>
+          </div>
+        </div>
+      </div><!-- End Service Item -->
+
+    </div>
+
+    <!-- View All Services Button -->
+    <div class="text-center mt-5">
+      <a href="all-services.html" class="btn btn-primary" data-aos="fade-up" data-aos-delay="600">
+        View All Services
+      </a>
+    </div>
+
+  </div>
+
+</section><!-- /Services Section -->
+
+<hr>
+<hr>
+
+
+
+<section id="portfolio" class="portfolio section">
+  <!-- Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Top Rated Mechanical Products</h2>
+    <p style="font-size: 20px; color: #555;">PRECISION & PERFORMANCE</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+      <!-- Product 1: High-Performance Diesel Engine -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-engines">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="Diesel Engine">
+          </div>
+          <div class="product-info">
+            <h4 class="product-title">High-Performance Diesel Engine</h4>
+            <p class="product-description">Powerful and fuel-efficient engine designed for heavy-duty applications.</p>
+            <p class="fw-bold">💰 Price: <span class="text-success">₦200,000</span></p>
+            <p class="product-location"><strong>📍 Location:</strong> Germany</p>
+            <p class="product-rating"><strong>⭐ Rating:</strong> 4.9/5 (⭐⭐⭐⭐⭐)</p>
+            <div class="product-buttons">
+              <a href="{% static 'assets/img/hero-bg.jpg' %}" class="btn btn-outline-primary btn-sm glightbox">🔍 View</a>
+              <a href="product-details.html" class="btn btn-primary btn-sm">🔗 Details</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Product Item -->
+
+      <!-- Product 2: Industrial Lathe Machine -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-machines">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="Lathe Machine">
+          </div>
+          <div class="product-info">
+            <h4 class="product-title">Industrial Lathe Machine</h4>
+            <p class="product-description">Precision cutting, shaping, and drilling with unmatched accuracy.</p>
+            <p class="fw-bold">💰 Price: <span class="text-success">₦200,000</span></p>
+            <p class="product-location"><strong>📍 Location:</strong> USA</p>
+            <p class="product-rating"><strong>⭐ Rating:</strong> 4.7/5 (⭐⭐⭐⭐☆)</p>
+            <div class="product-buttons">
+              <a href="{% static 'assets/img/hero-bg.jpg' %}" class="btn btn-outline-primary btn-sm glightbox">🔍 View</a>
+              <a href="product-details.html" class="btn btn-primary btn-sm">🔗 Details</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Product Item -->
+
+      <!-- Product 3: CNC Milling Machine -->
+      <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-machines">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="{% static 'assets/img/hero-bg.jpg' %}" class="img-fluid" alt="CNC Machine">
+          </div>
+          <div class="product-info">
+            <h4 class="product-title">Advanced CNC Milling Machine</h4>
+            <p class="product-description">High-speed precision cutting for industrial manufacturing.</p>
+            <p class="fw-bold">💰 Price: <span class="text-success">₦200,000</span></p>
+            <p class="product-location"><strong>📍 Location:</strong> Japan</p>
+            <p class="product-rating"><strong>⭐ Rating:</strong> 5.0/5 (⭐⭐⭐⭐⭐)</p>
+            <div class="product-buttons">
+              <a href="{% static 'assets/img/hero-bg.jpg' %}" class="btn btn-outline-primary btn-sm glightbox">🔍 View</a>
+              <a href="product-details.html" class="btn btn-primary btn-sm">🔗 Details</a>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Product Item -->
+
+    </div><!-- End Portfolio Container -->
+
+    <!-- View All Products Button -->
+    <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
+      <a href="products_list.html" class="btn btn-primary btn-lg">View All Products</a>
+    </div><!-- End View All Products Button -->
+
+  </div>
+</section><!-- /Portfolio Section -->
+{% endblock %}

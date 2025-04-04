@@ -1,0 +1,220 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Our Services{% endblock %}
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+      <div class="container position-relative">
+        <br><br><br>
+        <h1>Book Services</h1>
+        <p>Discover premium services tailored to your needs.</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li class="current">Services</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+<!-- Search and Filters Section -->
+<div class="container py-4">
+  <form method="GET" class="row gy-3">
+    <div class="col-md-6">
+      <input type="text" name="search" class="form-control shadow-sm" placeholder="🔍 Search for services..." value="{{ request.GET.search }}">
+    </div>
+
+    <div class="col-md-6">
+      <div class="row row-cols-auto g-2 justify-content-md-end">
+        <p class="text-black">Filter Services based on</p>
+        <!-- Category -->
+        <div class="col">
+          <select name="category" class="form-select shadow-sm">
+            <option value="">All Categories</option>
+            {% for cat in categories %}
+              <option value="{{ cat }}" {% if cat == selected_category %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Country -->
+        <!-- <div class="col">
+          <select name="country" class="form-select shadow-sm">
+            <option value="">Country</option>
+            {% for c in countries %}
+              <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div> -->
+
+        <!-- State -->
+        <div class="col">
+          <select name="state" class="form-select shadow-sm">
+            <option value="">All State</option>
+            {% for s in states %}
+              <option value="{{ s }}" {% if s == selected_state %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- City -->
+        <div class="col">
+          <select name="city" class="form-select shadow-sm">
+            <option value="">All City</option>
+            {% for city in cities %}
+              <option value="{{ city }}" {% if city == selected_city %}selected{% endif %}>{{ city }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <!-- Ratings -->
+        <!-- <div class="col">
+          <select name="rating" class="form-select shadow-sm">
+            <option value="">Ratings</option>
+            <option value="5" {% if selected_rating == "5" %}selected{% endif %}>⭐ 5.0+</option>
+            <option value="4.5" {% if selected_rating == "4.5" %}selected{% endif %}>⭐ 4.5+</option>
+            <option value="4" {% if selected_rating == "4" %}selected{% endif %}>⭐ 4.0+</option>
+          </select>
+        </div> -->
+
+        <!-- Submit Button -->
+        <div class="col">
+          <button type="submit" class="btn btn-primary shadow-sm px-4">Apply</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-- Service Listings -->
+<section id="services" class="services section py-5">
+  <div class="container">
+    <div class="row gy-4">
+      {% for service in services %}
+      <div class="col-lg-4 col-md-6">
+        <div class="card shadow-sm border-0">
+          <!-- Service Image -->
+          <div class="position-relative">
+            <img src="{{ service.service_image.url}}" 
+                 class="card-img-top img-fluid rounded-top" 
+                 alt="{{ service.service_name }}" 
+                 style="height: 200px; object-fit: cover;">
+          </div>
+
+          <div class="card-body">
+            <!-- Service Name -->
+            <h5 class="fw-bold text-center">{{ service.service_name }}</h5>
+
+            <!-- Service Description (Shortened) -->
+            <p class="text-muted small text-center">
+              {{ service.service_description|truncatewords:15 }}
+            </p>
+
+            <!-- Rating & Reviews -->
+            <div class="d-flex justify-content-center align-items-center mb-2">
+              ⭐ <strong class="ms-1">{{ service.average_rating|default:"No Rating" }}/5</strong>
+              <span class="text-muted small ms-2">({{ service.service_ratings.count|default:0 }} Reviews)</span>
+            </div>
+
+            <!-- Location -->
+            <div class="text-center mb-3">
+              <i class="bi bi-geo-alt text-danger"></i> 
+              <span class="text-primary">{{ service.service_city }}, {{ service.service_state }}</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center d-grid gap-2">
+              <a href="{% url 'service_detail' service.id %}" class="btn btn-primary btn-sm">
+                View Details
+              </a>
+            </div>
+            <br>
+                    <!-- Rate Product Button -->
+          <div class="text-center">
+          <button class="btn btn-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ product.id }}">
+            ⭐ Rate Product
+          </button>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- Rating Modal -->
+        <div class="modal fade" id="rateProductModal{{ product.id }}" tabindex="-1" 
+            aria-labelledby="rateProductModalLabel{{ product.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg rounded-4">
+              <div class="modal-header bg-dark text-white border-0">
+                <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ product.id }}">
+                  ⭐ Rate {{ product.product_name }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center">
+                {% if user.is_authenticated %}
+                <p class="text-primary fw-semibold">
+                  Please ensure your rating is fair and transparent to help others make informed decisions.
+                </p>
+                <a href="{% url 'service_rate' service.id %}" class="btn btn-primary btn-lg w-100 shadow-sm">
+                  Proceed <i class="fas fa-arrow-right"></i>
+                </a>
+                {% else %}
+                <p class="text-danger fw-bold">You must be logged in to submit a rating.</p>
+                <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
+                  🔐 Login to Continue
+                </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating Model CSS -->
+
+        <style>
+          .modal-content {
+              border-radius: 15px;
+              overflow: hidden;
+          }
+
+          .modal-header {
+              border-bottom: none;
+              box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+          }
+
+          .modal-body {
+              padding: 20px;
+          }
+
+          .btn-primary, .btn-danger {
+              border-radius: 10px;
+              transition: all 0.3s ease-in-out;
+          }
+
+          .btn-primary:hover {
+              background-color: #0056b3;
+              transform: translateY(-2px);
+          }
+
+          .btn-danger:hover {
+              background-color: #a83232;
+              transform: translateY(-2px);
+          }
+
+          .btn-close {
+              filter: invert(1);
+          }
+
+        </style>
+
+      
+      {% empty %}
+      <!-- No Services Found -->
+      <p class="text-center text-muted">No services found matching your criteria.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}
