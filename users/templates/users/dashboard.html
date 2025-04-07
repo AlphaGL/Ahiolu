@@ -1,0 +1,150 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}User Dashboard{% endblock %}
+{% block content %}
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title dark-background" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+    <div class="container position-relative">
+      <h1 class="text-white">User Dashboard</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="current text-white">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Dashboard Content -->
+  <div class="container py-5">
+
+    <!-- Section Title -->
+    <div class="section-title text-center" data-aos="fade-up">
+      <h2>Your Products and Services</h2>
+    </div><!-- End Section Title -->
+
+    <!-- Dashboard Controls -->
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <a href="{% url 'product_create' %}" class="btn btn-primary btn-sm w-100 mb-3 mb-md-0">Create New Product</a>
+        <br>
+        <br>
+        <a href="{% url 'service_create' %}" class="btn btn-secondary btn-sm w-100">Create New Service</a>
+      </div>
+    </div>
+
+    <!-- Tabs for Products and Services -->
+    <div class="text-center mb-4">
+      <button class="btn btn-outline-primary mx-2" id="showProductsBtn" onclick="toggleTab('products')">Products</button>
+      <button class="btn btn-outline-success mx-2" id="showServicesBtn" onclick="toggleTab('services')">Services</button>
+    </div>
+
+    <!-- Products List (Initially visible) -->
+    <div id="productsSection" class="row">
+        <h3 class="mb-4 text-primary">Products</h3>
+        {% for product in products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
+            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
+            <div class="card-body p-4">
+              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ product.product_name }}</h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ product.product_description|truncatewords:10 }}</p>
+              <div class="d-flex justify-content-between mt-auto">
+                <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No products posted yet.</p>
+        {% endfor %}
+
+        <!-- Promoted Products -->
+        <h3 class="mb-4 text-warning">Promoted Products</h3>
+        {% for product in promoted_products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
+            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
+            <div class="card-body p-4">
+              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ product.product_name }}</h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ product.product_description|truncatewords:10 }}</p>
+              <div class="d-flex justify-content-between mt-auto">
+                <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No promoted products posted yet.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Services List (Initially hidden) -->
+    <div id="servicesSection" class="row" style="display: none;">
+        <h3 class="mb-4 text-success">Services</h3>
+        {% for service in services %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
+            <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
+            <div class="card-body p-4">
+              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ service.service_name }}</h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ service.service_description|truncatewords:10 }}</p>
+              <div class="d-flex justify-content-between mt-auto">
+                <a href="{% url 'service_update' service.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'service_delete' service.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No services posted yet.</p>
+        {% endfor %}
+
+        <!-- Promoted Services -->
+        <h3 class="mb-4 text-warning">Promoted Services</h3>
+        {% for service in promoted_services %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
+            <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
+            <div class="card-body p-4">
+              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ service.service_name }}</h5>
+              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ service.service_description|truncatewords:10 }}</p>
+              <div class="d-flex justify-content-between mt-auto">
+                <a href="{% url 'service_update' service.id %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'service_delete' service.id %}" class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p>No promoted services posted yet.</p>
+        {% endfor %}
+    </div>
+
+  </div><!-- End Dashboard Content -->
+
+</main>
+
+<!-- JavaScript for Tab Toggle -->
+<script>
+  function toggleTab(tab) {
+    if (tab === 'products') {
+      document.getElementById('productsSection').style.display = 'block';
+      document.getElementById('servicesSection').style.display = 'none';
+      document.getElementById('showProductsBtn').classList.add('active');
+      document.getElementById('showServicesBtn').classList.remove('active');
+    } else {
+      document.getElementById('servicesSection').style.display = 'block';
+      document.getElementById('productsSection').style.display = 'none';
+      document.getElementById('showServicesBtn').classList.add('active');
+      document.getElementById('showProductsBtn').classList.remove('active');
+    }
+  }
+</script>
+
+{% endblock %}

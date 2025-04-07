@@ -37,16 +37,6 @@
           </select>
         </div>
 
-        <!-- Country -->
-        <!-- <div class="col">
-          <select name="country" class="form-select shadow-sm">
-            <option value="">Country</option>
-            {% for c in countries %}
-              <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
-            {% endfor %}
-          </select>
-        </div> -->
-
         <!-- State -->
         <div class="col">
           <select name="state" class="form-select shadow-sm">
@@ -66,16 +56,6 @@
             {% endfor %}
           </select>
         </div>
-
-        <!-- Ratings -->
-        <!-- <div class="col">
-          <select name="rating" class="form-select shadow-sm">
-            <option value="">Ratings</option>
-            <option value="5" {% if selected_rating == "5" %}selected{% endif %}>⭐ 5.0+</option>
-            <option value="4.5" {% if selected_rating == "4.5" %}selected{% endif %}>⭐ 4.5+</option>
-            <option value="4" {% if selected_rating == "4" %}selected{% endif %}>⭐ 4.0+</option>
-          </select>
-        </div> -->
 
         <!-- Submit Button -->
         <div class="col">
@@ -123,30 +103,32 @@
             </div>
 
             <!-- Buttons -->
-            <div class="text-center d-grid gap-2">
-              <a href="{% url 'service_detail' service.id %}" class="btn btn-primary btn-sm">
+            <div class="text-center mb-2">
+              <a href="{% url 'service_detail' service.id %}" class="btn btn-outline-primary btn-sm w-50">
                 View Details
               </a>
             </div>
-            <br>
-                    <!-- Rate Product Button -->
+                    <!-- Rate Service Button -->
           <div class="text-center">
-          <button class="btn btn-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ product.id }}">
-            ⭐ Rate Product
+          <button class="btn btn-warning btn-sm w-20" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ service.id }}">
+            ⭐ Share Feedback
           </button>
+          <a href="{% url 'service_reviews' service.id %}" class="btn btn-outline-secondary btn-sm w-20 text-black">
+            ⭐ View Reviews
+          </a>           
         </div>
         </div>
         </div>
         </div>
 
         <!-- Rating Modal -->
-        <div class="modal fade" id="rateProductModal{{ product.id }}" tabindex="-1" 
-            aria-labelledby="rateProductModalLabel{{ product.id }}" aria-hidden="true">
+        <div class="modal fade" id="rateProductModal{{ service.id }}" tabindex="-1" 
+            aria-labelledby="rateProductModalLabel{{ service.id }}" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content shadow-lg rounded-4">
               <div class="modal-header bg-dark text-white border-0">
-                <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ product.id }}">
-                  ⭐ Rate {{ product.product_name }}
+                <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ service.id }}">
+                  ⭐ Rate {{ service.service_name }}
                 </h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>

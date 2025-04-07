@@ -1,60 +1,71 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Add Service{% endblock %}
+{% block title %}Add/Edit Service{% endblock %}
 {% block content %}
-  <!-- Page Title -->
-    <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
-      <div class="container position-relative">
-        <br><br><br>
-        <h1>Add a New Service</h1>
-        <nav class="breadcrumbs">
-          <ol>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li class="current">Add Service</li>
-          </ol>
-        </nav>
-      </div>
-    </div><!-- End Page Title -->
+<!-- Page Title -->
+<div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+  <div class="container position-relative">
+    <br><br><br>
+    <h1>{% if service %}Edit Service{% else %}Add a New Service{% endif %}</h1>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li class="current">{% if service %}Edit Service{% else %}Add Service{% endif %}</li>
+      </ol>
+    </nav>
+  </div>
+</div><!-- End Page Title -->
 
-  <!-- Form Section -->
-  <section class="py-4">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-7">
-          <div class="card shadow-sm border border-secondary">
-            <div class="card-header bg-secondary text-white text-center">
-              <h4 class="fw-semibold my-2">Service Details</h4>
-            </div>
-            <div class="card-body px-4 py-4">
-              <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row g-3">
-                  {% for field in form %}
-                  <div class="col-md-6">
-                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                    <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                </div>
-                <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-dark px-4 py-2">Submit</button>
-                </div>
-              </form>
+<!-- Form Section -->
+<section class="py-4">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7">
+        <div class="card shadow-sm border border-secondary">
+          <div class="card-header bg-secondary text-white text-center">
+            <h4 class="fw-semibold my-2">{% if service %}Edit Service{% else %}Service Details{% endif %}</h4>
+          </div>
+          <div class="card-body px-4 py-4">
+            
+            <!-- Display Different Rules Based on Whether Service is Being Edited -->
+            <div class="alert alert-info mb-4">
               {% if service %}
-              <!-- Show Pay Listing Fee button only if service is created -->
-              <div class="text-center mt-3">
-                <a href="{% url 'pay_service_listing' service.id %}" class="btn btn-primary">Pay Listing Fee</a>
-              </div>
+              <h5 class="alert-heading">Important: Service Editing Rules</h5>
+              <p><strong>Editing Fee:</strong> There is no additional fee for editing a service.</p>
+              <p><strong>Promotion Fee:</strong> If you want to update your service promotion, an additional 1,000 Naira will be charged.</p>
+              <p><em>If you want to promot any <strong>Service</strong> Kindly contact support to promot any existing service</em></p>
+              {% else %}
+              <h5 class="alert-heading">Important: Service Listing Rules</h5>
+              <p><strong>Posting Fee:</strong> A fee of 1,000 Naira will be charged for each service you list.</p>
+              <p><strong>Promotion Fee:</strong> If you wish to promote your service, an additional fee of 1,000 Naira will be charged. To promote your service, simply check the 'Promote this service' checkbox.</p>
+              <p><em>Please note that these fees are non-refundable.</em></p>
               {% endif %}
             </div>
+
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row g-3">
+                {% for field in form %}
+                <div class="col-md-6">
+                  <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                  {{ field }}
+                  {% if field.errors %}
+                  <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                  {% endif %}
+                </div>
+                {% endfor %}
+              </div>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-dark px-4 py-2">Submit</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
 </main>
 
 <!-- Additional Styling -->
@@ -89,6 +100,16 @@
   }
   .card {
     border-radius: 8px;
+  }
+  .alert-info {
+    border-radius: 6px;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+    color: #0c5460;
+  }
+  .alert-heading {
+    font-weight: 600;
+    color: #0c5460;
   }
 </style>
 

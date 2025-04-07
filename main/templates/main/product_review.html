@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Product Reviews{% endblock %}
+
+{% block content %}
+
+  <!-- Page Title -->
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+    <div class="container position-relative">
+      <br><br><br>
+      <h1 class="text-white">Product Reviews</h1>
+      <p class="text-light">Read what others are saying about this product.</p>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+          <!-- <li><a href="{% url 'product_detail' product.id %}" class="text-white active">Product Detail</a></li> -->
+          <li class="current text-white">Reviews</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Product Reviews -->
+  <section id="product-reviews" class="product-reviews section py-5 bg-light">
+    <div class="container">
+      <h3 class="text-center mb-5">All Reviews</h3>
+
+      {% if reviews %}
+        <div class="reviews-list">
+          {% for review in reviews %}
+            <div class="review card shadow-sm mb-4">
+              <div class="card-header d-flex justify-content-between align-items-center bg-primary text-white">
+                <strong>{{ review.user_name }}</strong>
+                <span class="text-light">{{ review.created_at|date:"F d, Y" }}</span>
+              </div>
+              <div class="card-body">
+                <p class="review-text">{{ review.review }}</p>
+                <p class="mb-0"><strong>Rating:</strong> <span class="text-warning">{{ review.rating }}⭐</span></p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center text-muted">No reviews yet. Be the first to review this product!</p>
+      {% endif %}
+    </div>
+  </section>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Page Not Found - 404{% endblock %}
+{% block content %}
+
+<main class="main">
+
+  <!-- Page Title -->
+  <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+    <div class="container position-relative">
+      <br><br><br>
+      <h1>404 - Page Not Found</h1>
+      <p>Oops! The page you are looking for doesn’t exist or has been moved.</p>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li class="current">404 Error</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Error Section -->
+  <section id="error-section" class="starter-section section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Lost in Space?</h2>
+      <p>The page you're trying to reach doesn't exist.</p>
+    </div><!-- End Section Title -->
+
+    <div class="container text-center" data-aos="fade-up">
+      <p>It seems like the page you're looking for has vanished into the void.</p>
+      <a href="{% url 'home' %}" class="btn btn-primary mt-3">Go Back Home</a>
+    </div>
+
+  </section><!-- /Error Section -->
+
+</main>
+
+{% endblock %}

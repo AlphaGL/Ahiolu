@@ -45,30 +45,112 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h5 class="sitename">MechaParts</h5>
+        <h5 class="sitename">BConnect</h5>
       </a>
   
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{% url 'home' %}" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
           <li><a href="{% url 'service_list' %}">Book Services</a></li>
           <li><a href="{% url 'product_list' %}">Products</a></li>
+          <li><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a></li>
+          <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
           <!-- <li><a href="#contact">Contact</a></li> -->
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       {% if user.is_authenticated %}
-
-      <a class="cta-btn" href="{% url 'logout' %}">Logout</a>
-
-      {% else %}
-
+      <!-- Dropdown Button -->
+      <div class="dropdown">
+        <a class="cta-btn dropdown-toggle" href="#" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g fill="none" stroke="currentColor" stroke-dasharray="28" stroke-dashoffset="28" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+              <path d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1">
+                <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="28;0"/>
+              </path>
+              <path d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z">
+                <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.4s" dur="0.4s" values="28;0"/>
+              </path>
+            </g>
+          </svg>
+        </a>
+      
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a></li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    {% else %}
       <a class="cta-btn" href="{% url 'login' %}">Login</a>
       <a class="cta-btn" href="{% url 'register' %}">Register</a>
+    {% endif %}
+    
 
-      {% endif %}
+
+    <style>
+      /* Dropdown container */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+    
+      /* Main Button Styling */
+      .cta-btn {
+        /* background-color: #007bff; */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 14px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+      }
+    
+      /* .cta-btn:hover {
+        background-color: #0056b3;
+      } */
+    
+      /* Dropdown icon (SVG) */
+      .dropdown-toggle {
+        display: inline-block;
+        cursor: pointer;
+      }
+    
+      /* Dropdown Menu Styling */
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        min-width: 160px;
+        list-style: none;
+        z-index: 1000;
+      }
+    
+      /* Dropdown Item Styling */
+      .dropdown-item {
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+        display: block;
+        font-size: 14px;
+      }
+    
+      /* Hover effect for dropdown items */
+      .dropdown-item:hover {
+        background-color: #f1f1f1;
+      }
+    
+      /* Show the dropdown menu when hovering over the parent */
+      .dropdown:hover .dropdown-menu {
+        display: block;
+      }
+    </style>
   
     </div>
   </header>
@@ -90,11 +172,11 @@
           <h4>Useful Links</h4>
           <ul>
             <li><i class="bi bi-chevron-right"></i> <a href="{% url 'home' %}">Home</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">About Us</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="{% url 'about' %}">About Us</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="{% url 'product_list' %}">Shop Products</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="{% url 'service_list' %}">Book Services</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of Service</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy Policy</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
@@ -102,7 +184,7 @@
   
     <!-- Copyright Section -->
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">MechaElite</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">BConnect</strong> <span>All Rights Reserved</span></p>
     </div>
   
   </footer>

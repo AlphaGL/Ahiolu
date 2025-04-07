@@ -4,19 +4,19 @@
 {% block content %}
 
 <!-- Page Title -->
-  <div class="page-title dark-background text-center py-5" style="background-image: url({% static 'assets/img/page-title-bg.webp' %}); background-size: cover;">
-    <div class="container position-relative">
-      <br><br><br>
-      <h1>Shop Products</h1>
-      <p>Discover premium products with high quality and reliability.</p>
-      <nav class="breadcrumbs">
-        <ol>
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li class="current">Products</li>
-        </ol>
-      </nav>
-    </div>
-  </div><!-- End Page Title -->
+<div class="page-title dark-background text-center py-5" style="background-image: url({% static 'assets/img/page-title-bg.webp' %}); background-size: cover;">
+  <div class="container position-relative">
+    <br><br><br>
+    <h1>Shop Products</h1>
+    <p>Discover premium products with high quality and reliability.</p>
+    <nav class="breadcrumbs">
+      <ol>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li class="current">Products</li>
+      </ol>
+    </nav>
+  </div>
+</div><!-- End Page Title -->
 
 <!-- Search and Filters Section -->
 <div class="container py-4">
@@ -39,16 +39,6 @@
           </select>
         </div>
 
-        <!-- Country -->
-        <!-- <div class="col">
-          <select name="country" class="form-select shadow-sm">
-            <option value="">Country</option>
-            {% for c in countries %}
-              <option value="{{ c }}" {% if c == selected_country %}selected{% endif %}>{{ c }}</option>
-            {% endfor %}
-          </select>
-        </div> -->
-
         <!-- State -->
         <div class="col">
           <select name="state" class="form-select shadow-sm">
@@ -69,16 +59,6 @@
           </select>
         </div>
 
-        <!-- Ratings -->
-        <!-- <div class="col">
-          <select name="rating" class="form-select shadow-sm">
-            <option value="">Ratings</option>
-            <option value="5" {% if selected_rating == "5" %}selected{% endif %}>⭐ 5.0+</option>
-            <option value="4.5" {% if selected_rating == "4.5" %}selected{% endif %}>⭐ 4.5+</option>
-            <option value="4" {% if selected_rating == "4" %}selected{% endif %}>⭐ 4.0+</option>
-          </select>
-        </div> -->
-
         <!-- Submit Button -->
         <div class="col">
           <button type="submit" class="btn btn-primary shadow-sm px-4">Apply</button>
@@ -91,10 +71,10 @@
 <!-- Product Listings -->
 <section id="portfolio" class="portfolio section py-5">
   <div class="container">
-    <div class="row gy-4">
+    <div class="row gy-4 product-grid">
       {% for product in products %}
-      <div class="col-lg-4 col-md-6">
-        <div class="card shadow-sm border-0">
+      <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="card shadow-sm border-0 product-card">
           <!-- Product Image -->
           <div class="position-relative">
             <img src="{{ product.product_image.url }}" 
@@ -131,98 +111,172 @@
 
             <!-- Details Button -->
             <div class="text-center mb-2">
-              <a href="{% url 'product_detail' product.id %}" class="btn btn-primary btn-sm w-100">
+              <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-primary btn-sm w-50">
                 View Details
               </a>
             </div>
 
-        <!-- Rate Product Button -->
-        <div class="text-center">
-          <button class="btn btn-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ product.id }}">
-            ⭐ Rate Product
-          </button>
-        </div>
-        </div>
-        </div>
-        </div>
-
-        <!-- Rating Modal -->
-        <div class="modal fade" id="rateProductModal{{ product.id }}" tabindex="-1" 
-            aria-labelledby="rateProductModalLabel{{ product.id }}" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content shadow-lg rounded-4">
-              <div class="modal-header bg-dark text-white border-0">
-                <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ product.id }}">
-                  ⭐ Rate {{ product.product_name }}
-                </h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body text-center">
-                {% if user.is_authenticated %}
-                <p class="text-primary fw-semibold">
-                  Please ensure your rating is fair and transparent to help others make informed decisions.
-                </p>
-                <a href="{% url 'product_rate' product.id %}" class="btn btn-primary btn-lg w-100 shadow-sm">
-                  Proceed <i class="fas fa-arrow-right"></i>
-                </a>
-                {% else %}
-                <p class="text-danger fw-bold">You must be logged in to submit a rating.</p>
-                <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
-                  🔐 Login to Continue
-                </a>
-                {% endif %}
-              </div>
+            <!-- Rate Product Button -->
+            <div class="text-center">
+              <button class="btn btn-warning btn-sm w-20" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ product.id }}">
+                ⭐ Share Feedback
+              </button>
+              <a href="{% url 'product_reviews' product.id %}" class="btn btn-outline-secondary btn-sm w-20 text-black">
+                ⭐ View Reviews
+              </a>          
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Rating Model CSS -->
+      <!-- Rating Modal -->
+      <div class="modal fade" id="rateProductModal{{ product.id }}" tabindex="-1" 
+           aria-labelledby="rateProductModalLabel{{ product.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-0">
+              <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ product.id }}">
+                ⭐ Rate {{ product.product_name }}
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              {% if user.is_authenticated %}
+              <p class="text-primary fw-semibold">
+                Please ensure your rating is fair and transparent to help others make informed decisions.
+              </p>
+              <a href="{% url 'product_rate' product.id %}" class="btn btn-primary btn-lg w-100 shadow-sm">
+                Proceed <i class="fas fa-arrow-right"></i>
+              </a>
+              {% else %}
+              <p class="text-danger fw-bold">You must be logged in to submit a rating.</p>
+              <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
+                🔐 Login to Continue
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <style>
-          .modal-content {
-              border-radius: 15px;
-              overflow: hidden;
-          }
-
-          .modal-header {
-              border-bottom: none;
-              box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-          }
-
-          .modal-body {
-              padding: 20px;
-          }
-
-          .btn-primary, .btn-danger {
-              border-radius: 10px;
-              transition: all 0.3s ease-in-out;
-          }
-
-          .btn-primary:hover {
-              background-color: #0056b3;
-              transform: translateY(-2px);
-          }
-
-          .btn-danger:hover {
-              background-color: #a83232;
-              transform: translateY(-2px);
-          }
-
-          .btn-close {
-              filter: invert(1);
-          }
-
-        </style>
-
-
-      
       {% empty %}
-      <!-- No Products Found -->
       <p class="text-center text-muted">No products found matching your criteria.</p>
       {% endfor %}
     </div>
   </div>
 </section>
 
-
 {% endblock %}
+
+<!-- Custom CSS for Responsiveness -->
+<style>
+  /* General Styles */
+  .product-card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-card img {
+    height: 220px;
+    object-fit: cover;
+  }
+
+  .product-card .card-body {
+    padding: 20px;
+  }
+
+  .product-card .card-body h5 {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .product-card .card-body p {
+    font-size: 14px;
+    color: #666;
+  }
+
+  .product-card .card-body .text-success {
+    font-size: 18px;
+  }
+
+  .product-card .card-body .btn {
+    transition: background-color 0.3s ease;
+  }
+
+  .product-card .card-body .btn:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+
+  /* Responsive Styles for Product Grid */
+  @media (max-width: 768px) {
+    .page-title h1 {
+      font-size: 28px;
+    }
+
+    .page-title p {
+      font-size: 14px;
+    }
+
+    .product-card .card-body h5 {
+      font-size: 16px;
+    }
+
+    .product-card .card-body p {
+      font-size: 13px;
+    }
+
+    .product-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .product-grid > .col-lg-4,
+    .product-grid > .col-md-6,
+    .product-grid > .col-sm-12 {
+      grid-column: span 1 !important;
+      width: 100% !important;
+    }
+  }
+
+  /* Modal Styling */
+  .modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .modal-header {
+    border-bottom: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .btn-primary, .btn-danger {
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+  }
+
+  .btn-danger:hover {
+    background-color: #a83232;
+    transform: translateY(-2px);
+  }
+
+  .btn-close {
+    filter: invert(1);
+  }
+</style>

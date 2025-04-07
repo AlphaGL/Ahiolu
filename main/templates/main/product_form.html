@@ -2,29 +2,45 @@
 {% load static %}
 {% block title %}Add Product{% endblock %}
 {% block content %}
-      <!-- Page Title -->
-      <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
-        <div class="container position-relative">
-          <br><br><br>
-          <h1>Add a New Product</h1>
-          <nav class="breadcrumbs">
-            <ol>
-              <li><a href="{% url 'home' %}">Home</a></li>
-              <li class="current">Add Product</li>
-            </ol>
-          </nav>
-        </div>
-      </div><!-- End Page Title -->
+<!-- Page Title -->
+<div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+<div class="container position-relative">
+  <br><br><br>
+  <h1>{% if product %}Edit Product{% else %}Add a New Product{% endif %}</h1>
+  <nav class="breadcrumbs">
+    <ol>
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li class="current">{% if product %}Edit Product{% else %}Add Product{% endif %}</li>
+    </ol>
+  </nav>
+</div>
+</div><!-- End Page Title -->
 
-  <!-- Form Section -->
-  <section class="py-4">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-7">
-          <div class="card shadow-sm border border-secondary">
-            <div class="card-header bg-secondary text-white text-center">
-              <h4 class="fw-semibold my-2">Product Information</h4>
-            </div>
+<!-- Form Section -->
+<section class="py-4">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+      <div class="card shadow-sm border border-secondary">
+        <div class="card-header bg-secondary text-white text-center">
+          <h4 class="fw-semibold my-2">{% if product %}Edit Product{% else %}Product Information{% endif %}</h4>
+        </div>
+        <div class="card-body px-4 py-4">
+          
+          <!-- Display the Product Listing Rules -->
+          <div class="alert alert-info mb-4">
+            {% if product %}
+            <h5 class="alert-heading">Important: Product Editing Rules</h5>
+            <p><strong>Editing Fee:</strong> There is no additional fee for editing a product, but any changes you make will be subject to approval.</p>
+            <p><strong>Promotion Fee:</strong> If you want to update your product promotion, an additional 1,000 Naira will be charged.</p>
+            <p><em>If you want to promot any <strong>Product</strong> Kindly contact support to promot any existing product</em></p>
+            {% else %}
+            <h5 class="alert-heading">Important: Product Listing Rules</h5>
+            <p><strong>Posting Fee:</strong> A fee of 1,000 Naira will be charged for each product you list.</p>
+            <p><strong>Promotion Fee:</strong> If you wish to promote your product, an additional fee of 1,000 Naira will be charged. To promote your product, simply check the 'Promote this product' checkbox.</p>
+            <p><em>Please note that these fees are non-refundable.</em></p>
+            {% endif %}
+          </div>
             <div class="card-body px-4 py-4">
               <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -43,12 +59,6 @@
                   <button type="submit" class="btn btn-dark px-4 py-2">Submit</button>
                 </div>
               </form>
-              {% if product %}
-              <!-- Show Pay Listing Fee button only if product is created -->
-              <div class="text-center mt-3">
-                <a href="{% url 'pay_product_listing' product.id %}" class="btn btn-primary">Pay Listing Fee</a>
-              </div>
-              {% endif %}
             </div>
           </div>
         </div>
@@ -90,6 +100,16 @@
   .card {
     border-radius: 8px;
   }
+  .alert-info {
+  border-radius: 6px;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}
+.alert-heading {
+  font-weight: 600;
+  color: #0c5460;
+}
 </style>
 
 {% endblock %}

@@ -19,6 +19,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Custom error handler import
+from django.conf.urls import handler404
+from django.shortcuts import render
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
@@ -26,3 +30,13 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG is False:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Custom 404 error handler
+def custom_404_view(request, exception):
+    return render(request, 'main/404.html', status=404)
+
+handler404 = custom_404_view

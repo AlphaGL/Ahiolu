@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Privacy Policy | BConnect{% endblock %}
+
+{% block content %}
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
+      <div class="container position-relative">
+        <h1>Privacy Policy</h1>
+        <p>How we handle your data</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li class="current">Privacy Policy</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Privacy Policy Section -->
+    <section id="privacy-policy" class="privacy-policy section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Privacy Policy</h2>
+        <p>Your privacy is important to us. Please read this policy to understand how we collect, use, and protect your personal information.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up">
+        <h3>1. Information Collection</h3>
+        <p>We collect personal data such as your name, email address, phone number, and payment details when you use our platform to book services or purchase products.</p>
+
+        <h3>2. Use of Information</h3>
+        <p>Your information is used to provide the services you've requested, process payments, and improve your experience with BConnect.</p>
+
+        <h3>3. Data Security</h3>
+        <p>We take appropriate measures to protect your data, including encryption, secure servers, and regular security audits to safeguard your personal information.</p>
+
+        <h3>4. Sharing of Information</h3>
+        <p>We do not share your personal data with third parties unless required by law or necessary for the completion of a service or product transaction.</p>
+
+        <h3>5. Cookies</h3>
+        <p>Our website uses cookies to enhance your experience. You can disable cookies through your browser settings, but some features may not work properly.</p>
+      </div>
+    </section><!-- /Privacy Policy Section -->
+
+  </main>
+{% endblock %}

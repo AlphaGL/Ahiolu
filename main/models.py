@@ -9,173 +9,185 @@ from django.conf import settings # Custom User Authentication
 class LocationCategory(models.Model):
     CATEGORY_CHOICES = [
         ('all', 'All Categories'),
-        ('tech', 'Technology'),
-        ('science', 'Science'),
-        ('arts', 'Arts'),
-        ('business', 'Business'),
-        ('finance', 'Finance'),
-        ('health', 'Health & Wellness'),
-        ('education', 'Education'),
-        ('sports', 'Sports'),
-        ('gaming', 'Gaming'),
-        ('entertainment', 'Entertainment'),
-        ('travel', 'Travel & Tourism'),
-        ('food', 'Food & Cooking'),
-        ('fashion', 'Fashion & Beauty'),
-        ('automobile', 'Automobiles'),
-        ('real_estate', 'Real Estate'),
-        ('music', 'Music'),
-        ('movies', 'Movies & TV Shows'),
-        ('cryptocurrency', 'Cryptocurrency'),
-        ('environment', 'Environment & Sustainability'),
-        ('ai', 'Artificial Intelligence'),
-        ('literature', 'Literature'),
-        ('history', 'History'),
-        ('law', 'Law & Legal'),
-        ('philosophy', 'Philosophy'),
-        ('psychology', 'Psychology'),
-        ('architecture', 'Architecture'),
-        ('engineering', 'Engineering'),
-        ('mathematics', 'Mathematics'),
-        ('space', 'Space Exploration'),
-        ('biology', 'Biology'),
-        ('chemistry', 'Chemistry'),
-        ('physics', 'Physics'),
-        ('geography', 'Geography'),
-        ('sociology', 'Sociology'),
-        ('politics', 'Politics & Government'),
-        ('religion', 'Religion & Spirituality'),
-        ('parenting', 'Parenting'),
-        ('lifestyle', 'Lifestyle'),
-        ('productivity', 'Productivity & Self-Improvement'),
-        ('social_media', 'Social Media & Marketing'),
-        ('entrepreneurship', 'Entrepreneurship'),
-        ('leadership', 'Leadership & Management'),
-        ('investing', 'Investing & Stock Market'),
-        ('startups', 'Startups'),
-        ('design', 'Design & UX/UI'),
-        ('photography', 'Photography'),
-        ('videography', 'Videography'),
-        ('graphic_design', 'Graphic Design'),
-        ('podcasting', 'Podcasting'),
-        ('writing', 'Writing & Copywriting'),
-        ('journalism', 'Journalism'),
-        ('news', 'News & Media'),
-        ('humor', 'Humor & Satire'),
-        ('crafts', 'Crafts & DIY'),
-        ('pets', 'Pets & Animals'),
-        ('gardening', 'Gardening'),
-        ('automotive', 'Automotive Repair & Maintenance'),
-        ('furniture', 'Furniture & Home Decor'),
-        ('gaming_hardware', 'Gaming Hardware & Equipment'),
-        ('personal_finance', 'Personal Finance'),
-        ('real_estate_investment', 'Real Estate Investment'),
-        ('investing_education', 'Investing Education'),
-        ('freelancing', 'Freelancing & Remote Work'),
-        ('vlogging', 'Vlogging & YouTube'),
-        ('self_defense', 'Self Defense & Safety'),
-        ('language_learning', 'Language Learning'),
-        ('nutrition', 'Nutrition & Diet'),
-        ('beauty', 'Beauty & Cosmetics'),
-        ('skincare', 'Skincare & Haircare'),
-        ('luxury', 'Luxury & Lifestyle'),
-        ('vintage', 'Vintage & Collectibles'),
-        ('antiques', 'Antiques'),
-        ('gaming_tournaments', 'Gaming Tournaments'),
-        ('e_sports', 'E-Sports'),
-        ('mobile_technology', 'Mobile Technology'),
-        ('blockchain', 'Blockchain Technology'),
-        ('cloud_computing', 'Cloud Computing'),
-        ('robotics', 'Robotics'),
-        ('internet_of_things', 'Internet of Things (IoT)'),
-        ('cybersecurity', 'Cybersecurity'),
-        ('virtual_reality', 'Virtual Reality (VR)'),
-        ('augmented_reality', 'Augmented Reality (AR)'),
-        ('wearable_technology', 'Wearable Technology'),
-        ('3d_printing', '3D Printing'),
-        ('fintech', 'Financial Technology (Fintech)'),
-        ('green_technology', 'Green Technology'),
-        ('biotechnology', 'Biotechnology'),
-        ('genetics', 'Genetics & Genomics'),
-        ('pharmacology', 'Pharmacology & Drugs'),
-        ('food_science', 'Food Science & Research'),
-        ('astronomy', 'Astronomy & Astrophysics'),
-        ('marine_science', 'Marine Science & Oceanography'),
-        ('geology', 'Geology'),
-        ('volunteering', 'Volunteering & Charity Work'),
         ('activism', 'Activism & Social Movements'),
-        ('human_rights', 'Human Rights'),
-        ('mental_health', 'Mental Health'),
-        ('addiction_recovery', 'Addiction Recovery'),
-        ('elderly_care', 'Elderly Care & Support'),
-        ('women_issues', 'Women\'s Issues'),
-        ('disability', 'Disability Rights & Support'),
-        ('minimalism', 'Minimalism & Decluttering'),
-        ('home_improvement', 'Home Improvement'),
-        ('fishing', 'Fishing & Aquatic Sports'),
-        ('hiking', 'Hiking & Outdoor Activities'),
-        ('camping', 'Camping & Survival Skills'),
-        ('cycling', 'Cycling & Mountain Biking'),
-        ('yoga', 'Yoga & Meditation'),
-        ('pilates', 'Pilates & Physical Fitness'),
-        ('dance', 'Dance & Performance Arts'),
-        ('sports_gear', 'Sports Gear & Equipment'),
-        ('swimming', 'Swimming & Water Sports'),
-        ('winter_sports', 'Winter Sports'),
-        ('snowboarding', 'Snowboarding & Skiing'),
-        ('music_production', 'Music Production & Sound Engineering'),
-        ('musical_instruments', 'Musical Instruments & Gear'),
-        ('audio_engineering', 'Audio Engineering'),
-        ('classical_music', 'Classical Music'),
-        ('jazz', 'Jazz Music'),
-        ('rock', 'Rock Music'),
-        ('pop', 'Pop Music'),
-        ('hiphop', 'Hip-Hop Music'),
-        ('electronic_music', 'Electronic Music'),
-        ('country_music', 'Country Music'),
-        ('indie_music', 'Indie Music'),
-        ('world_music', 'World Music'),
-        ('comedy', 'Comedy & Stand-Up'),
-        ('short_films', 'Short Films & Documentaries'),
-        ('theater', 'Theater & Performing Arts'),
-        ('musicals', 'Musicals & Broadway'),
-        ('independent_film', 'Independent Film'),
-        ('documentary', 'Documentary Film'),
-        ('literature_reviews', 'Literature Reviews'),
-        ('book_clubs', 'Book Clubs & Reviews'),
-        ('writing_prompts', 'Writing Prompts'),
-        ('book_illustrations', 'Book Illustrations & Artwork'),
-        ('author_interviews', 'Author Interviews'),
-        ('language_arts', 'Language Arts'),
-        ('comic_books', 'Comic Books & Graphic Novels'),
-        ('manga', 'Manga & Anime'),
-        ('fan_fiction', 'Fan Fiction'),
-        ('cosplay', 'Cosplay & Costumes'),
-        ('conventions', 'Conventions & Expos'),
-        ('collectibles', 'Collectibles & Memorabilia'),
-        ('esoteric', 'Esoteric & Mysticism'),
-        ('astrology', 'Astrology & Horoscopes'),
-        ('tarot', 'Tarot & Divination'),
-        ('mindfulness', 'Mindfulness & Meditation'),
-        ('spirituality', 'Spirituality & Faith'),
-        ('personal_growth', 'Personal Growth & Self-Development'),
-        ('hobbies', 'Hobbies & Crafts'),
-        ('geocaching', 'Geocaching & Treasure Hunting'),
-        ('urban_exploration', 'Urban Exploration'),
+        ('advertising_services', 'Advertising & Marketing Services'),
+        ('ai', 'Artificial Intelligence'),
+        ('antiques', 'Antiques'),
+        ('astronomy', 'Astronomy & Astrophysics'),
+        ('automobile', 'Automobiles'),
+        ('automobiles', 'Vehicles'),
+        ('automotive', 'Automotive Repair & Maintenance'),
         ('biking', 'Biking & Cycling'),
+        ('biology', 'Biology'),
+        ('blockchain', 'Blockchain Technology'),
+        ('book_clubs', 'Book Clubs & Reviews'),
+        ('business', 'Business'),
+        ('business_automation', 'Business Automation & CRM'),
+        ('camping', 'Camping & Survival Skills'),
+        ('cars', 'Cars & Automotive Reviews'),
+        ('chemistry', 'Chemistry'),
+        ('cloud_computing', 'Cloud Computing'),
+        ('cloud_services', 'Cloud Services & Hosting'),
+        ('collectibles', 'Collectibles & Memorabilia'),
+        ('comedy', 'Comedy & Stand-Up'),
+        ('composting', 'Composting & Waste Management'),
+        ('construction', 'Construction & Building Materials'),
+        ('consulting_services', 'Business & Consulting Services'),
+        ('cycling', 'Cycling & Mountain Biking'),
+        ('digital_marketing', 'Digital Marketing & SEO'),
+        ('digital_marketing_services', 'Digital Marketing & SEO Services'),
+        ('disability', 'Disability Rights & Support'),
+        ('diy_projects', 'DIY Projects & Home Improvement'),
+        ('education', 'Education'),
+        ('education_services', 'Educational Services'),
+        ('elderly_care', 'Elderly Care & Support'),
+        ('electronics', 'Consumer Electronics'),
+        ('electronics', 'Electronics & Gadgets'),
+        ('engineering', 'Engineering'),
+        ('environment', 'Environment & Sustainability'),
+        ('esoteric', 'Esoteric & Mysticism'),
+        ('e_sports', 'E-Sports'),
+        ('fashion', 'Fashion & Beauty'),
+        ('fishing', 'Fishing & Aquatic Sports'),
+        ('fitness_services', 'Fitness & Personal Training Services'),
+        ('food', 'Food & Cooking'),
+        ('food_science', 'Food Science & Research'),
+        ('freelancing', 'Freelancing & Remote Work'),
+        ('furniture', 'Furniture & Home Decor'),
+        ('games', 'Video Games & Consoles'),
+        ('gaming', 'Gaming'),
+        ('gaming_hardware', 'Gaming Hardware & Equipment'),
+        ('gaming_tournaments', 'Gaming Tournaments'),
+        ('gardening', 'Gardening'),
+        ('gardening_tips', 'Gardening & Landscaping Tips'),
+        ('geocaching', 'Geocaching & Treasure Hunting'),
+        ('geography', 'Geography'),
+        ('genetics', 'Genetics & Genomics'),
+        ('graphic_design', 'Graphic Design'),
+        ('health_and_beauty', 'Health & Beauty Products'),
+        ('health_services', 'Healthcare Services'),
+        ('hiking', 'Hiking & Outdoor Activities'),
+        ('history', 'History'),
+        ('horse_racing', 'Horse Racing & Equestrian Sports'),
+        ('humor', 'Humor & Satire'),
+        ('internet_of_things', 'Internet of Things (IoT)'),
+        ('it_services', 'IT Support & Solutions'),
+        ('it_support', 'IT Support & Services'),
+        ('jazz', 'Jazz Music'),
+        ('jewelry', 'Jewelry & Accessories'),
+        ('journalism', 'Journalism'),
+        ('kitchenware', 'Kitchen Tools & Appliances'),
+        ('language_arts', 'Language Arts'),
+        ('language_learning', 'Language Learning'),
+        ('leadership', 'Leadership & Management'),
+        ('literature', 'Literature'),
+        ('literature_reviews', 'Literature Reviews'),
+        ('luxury', 'Luxury & Lifestyle'),
+        ('luxury_goods', 'Luxury Goods'),
+        ('mental_health', 'Mental Health'),
+        ('mobile_technology', 'Mobile Technology'),
+        ('mobiles', 'Mobile Phones & Accessories'),
+        ('motorsports', 'Motorsports & Racing'),
+        ('music', 'Music'),
+        ('music_production', 'Music Production & Sound Engineering'),
+        ('manga', 'Manga & Anime'),
+        ('minimalism', 'Minimalism & Decluttering'),
+        ('mindfulness', 'Mindfulness & Meditation'),
+        ('mobile_technology', 'Mobile Technology'),
+        ('movies', 'Movies & TV Shows'),
+        ('news', 'News & Media'),
+        ('nutrition', 'Nutrition & Diet'),
+        ('office_supplies', 'Office Supplies & Equipment'),
+        ('pets', 'Pets & Animals'),
+        ('pet_supplies', 'Pet Products & Supplies'),
+        ('philosophy', 'Philosophy'),
+        ('photography', 'Photography'),
+        ('photography_services', 'Photography & Videography Services'),
+        ('podcasting', 'Podcasting'),
+        ('politics', 'Politics & Government'),
+        ('personal_growth', 'Personal Growth & Self-Development'),
+        ('personal_services', 'Personal Assistance'),
+        ('personal_finance', 'Personal Finance'),
+        ('programming', 'Programming & Coding'),
+        ('product_reviews', 'Product Reviews & Testing'),
+        ('productivity', 'Productivity & Self-Improvement'),
+        ('real_estate', 'Real Estate'),
+        ('real_estate_services', 'Real Estate Services'),
+        ('real_estate_investment', 'Real Estate Investment'),
+        ('religion', 'Religion & Spirituality'),
+        ('rock', 'Rock Music'),
+        ('robotics', 'Robotics'),
         ('rock_climbing', 'Rock Climbing & Adventure Sports'),
-        ('extreme_sports', 'Extreme Sports'),
+        ('sailing', 'Sailing & Marine Activities'),
+        ('self_defense', 'Self Defense & Safety'),
+        ('short_films', 'Short Films & Documentaries'),
+        ('snow_sports', 'Snow Sports'),
+        ('snowboarding', 'Snowboarding & Skiing'),
+        ('social_media', 'Social Media & Marketing'),
+        ('space', 'Space Exploration'),
+        ('space_technology', 'Space Technology & Exploration'),
+        ('sports', 'Sports'),
+        ('sports_gear', 'Sports Gear & Equipment'),
         ('stand_up_paddleboarding', 'Stand-Up Paddleboarding'),
         ('skateboarding', 'Skateboarding'),
-        ('motorsports', 'Motorsports & Racing'),
-        ('horse_racing', 'Horse Racing & Equestrian Sports'),
-        ('snow_sports', 'Snow Sports'),
-        ('space_technology', 'Space Technology & Exploration'),
-        ('sustainable_farming', 'Sustainable Farming'),
-        ('urban_farming', 'Urban Farming & Gardening'),
-        ('composting', 'Composting & Waste Management'),
-        ('ecotourism', 'Ecotourism & Sustainable Travel'),
-        ('green_living', 'Green Living & Sustainability'),
+        ('startups', 'Startups'),
+        ('swimming', 'Swimming & Water Sports'),
+        ('tarot', 'Tarot & Divination'),
+        ('technology', 'Technology'),
+        ('television', 'Television & TV Shows'),
+        ('tech_reviews', 'Tech Reviews & Gadgets'),
+        ('theater', 'Theater & Performing Arts'),
+        ('tv_reviews', 'TV Shows & Reviews'),
+        ('vintage', 'Vintage & Collectibles'),
+        ('vlogging', 'Vlogging & YouTube'),
+        ('wearable_technology', 'Wearable Technology'),
+        ('web_development', 'Web Development & Programming'),
+        ('women_issues', 'Women\'s Issues'),
+        ('wine_and_spirits', 'Wine & Spirits'),
+        ('yoga', 'Yoga & Meditation'),
+        # Product Categories
+        ('appliances', 'Home Appliances'),
+        ('automobiles', 'Vehicles'),
+        ('clothing', 'Apparel & Fashion'),
+        ('computers', 'Computer Hardware & Peripherals'),
+        ('electronics', 'Consumer Electronics'),
+        ('furniture', 'Furniture & Home Decor'),
+        ('games', 'Video Games & Consoles'),
+        ('health_and_beauty', 'Health & Beauty Products'),
+        ('home_decor', 'Home Decor & Accessories'),
+        ('jewelry', 'Jewelry & Accessories'),
+        ('kitchenware', 'Kitchen Tools & Appliances'),
+        ('luxury_goods', 'Luxury Goods'),
+        ('mobile_phones', 'Mobile Phones & Accessories'),
+        ('office_supplies', 'Office Supplies & Equipment'),
+        ('pet_supplies', 'Pet Products & Supplies'),
+        ('sports_equipment', 'Sports Equipment & Gear'),
+        ('toys_and_games', 'Toys & Games for Kids'),
+        ('tools', 'Tools & DIY Products'),
+        ('watches', 'Watches & Timepieces'),
+        ('wine_and_spirits', 'Wine & Spirits'),
+        ('baby_products', 'Baby Products & Accessories'),
+        # Service Categories
+        ('advertising_services', 'Advertising & Marketing Services'),
+        ('cloud_services', 'Cloud Services & Hosting'),
+        ('consulting_services', 'Business & Consulting Services'),
+        ('education_services', 'Educational Services'),
+        ('event_management', 'Event Planning & Management'),
+        ('financial_services', 'Financial & Investment Services'),
+        ('health_services', 'Healthcare Services'),
+        ('home_services', 'Home Improvement Services'),
+        ('insurance_services', 'Insurance Services'),
+        ('it_services', 'IT Support & Solutions'),
+        ('legal_services', 'Legal Consulting & Services'),
+        ('real_estate_services', 'Real Estate Services'),
+        ('transportation_services', 'Transportation & Delivery Services'),
+        ('travel_services', 'Travel & Tourism Services'),
+        ('writing_services', 'Writing & Editing Services'),
+        ('personal_services', 'Personal Assistance'),
+        ('marketing_services', 'Digital Marketing & SEO Services'),
+        ('photography_services', 'Photography & Videography Services'),
+        ('cleaning_services', 'Cleaning & Janitorial Services'),
+        ('fitness_services', 'Fitness & Personal Training Services'),
     ]
 
     COUNTRY_CHOICES = [
@@ -242,7 +254,7 @@ class LocationCategory(models.Model):
         ('published', 'Published'),
     ]
 
-    category = models.CharField(max_length=30, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=300, choices=CATEGORY_CHOICES)
     country = models.CharField(max_length=2, choices=COUNTRY_CHOICES, default='NG')
     state = models.CharField(max_length=20, choices=STATE_CHOICES)
     city = models.CharField(max_length=50)  # Cities will be dynamically populated in forms
@@ -263,11 +275,12 @@ class LocationCategory(models.Model):
 #  PRODUCTS MODEL
 # ===========================
 class Products(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products",default=1)
     product_name = models.CharField(max_length=100)
     product_image = models.ImageField(upload_to='product_images/')
     product_description = models.TextField(max_length=250)
     product_price = models.PositiveIntegerField()
-    product_category = models.CharField(max_length=50, choices=LocationCategory.CATEGORY_CHOICES, default="all")
+    product_category = models.CharField(max_length=300, choices=LocationCategory.CATEGORY_CHOICES, default="all")
     product_country = models.CharField(max_length=50, choices=LocationCategory.COUNTRY_CHOICES, default="All")
     product_state = models.CharField(max_length=50, choices=LocationCategory.STATE_CHOICES, default="All")
     product_status = models.CharField(max_length=20, choices=LocationCategory.STATUS_CHOICES, default='pending')
@@ -276,6 +289,11 @@ class Products(models.Model):
     # product_provider_email = models.CharField(max_length=1000, null=True, blank=True)
     product_provider_phone = models.CharField(max_length=15, null=True, blank=True)
     is_paid = models.BooleanField(default=False)  # Track payment status
+
+    # Add this to your Products model
+    is_promoted = models.BooleanField(default=False)
+    promotion_fee = models.PositiveIntegerField(default=1000)
+
 
     def average_rating(self):
         ratings = self.product_ratings.all()
@@ -294,10 +312,11 @@ class Products(models.Model):
 #  SERVICES MODEL
 # ===========================
 class Services(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="services",default=1)
     service_name = models.CharField(max_length=100)
     service_image = models.ImageField(upload_to='services_images/')
     service_description = models.TextField(max_length=250)
-    service_category = models.CharField(max_length=50, choices=LocationCategory.CATEGORY_CHOICES, default="all")
+    service_category = models.CharField(max_length=300, choices=LocationCategory.CATEGORY_CHOICES, default="all")
     service_country = models.CharField(max_length=50, choices=LocationCategory.COUNTRY_CHOICES, default="All")
     service_state = models.CharField(max_length=50, choices=LocationCategory.STATE_CHOICES, default="All")
     service_city = models.CharField(max_length=50, choices=LocationCategory.CITY_CHOICES, default="All")
@@ -315,6 +334,10 @@ class Services(models.Model):
     other_service_c = models.CharField(max_length=50, blank=True, null=True)
 
     is_paid = models.BooleanField(default=False)  # Track payment status
+
+    # Add this to your Services model
+    is_promoted = models.BooleanField(default=False)
+    promotion_fee = models.PositiveIntegerField(default=1000)
 
     def average_rating(self):
         ratings = self.service_ratings.all()
@@ -334,8 +357,8 @@ class Services(models.Model):
 # ===========================
 class ProductRating(models.Model):
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name="product_ratings")
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # custom user authentication
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_name = models.CharField(max_length=250, blank=False, default='anonymous')
     rating = models.DecimalField(max_digits=2, decimal_places=1, choices=[(i/2, str(i/2)) for i in range(0, 11)])
     review = models.TextField(max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -344,7 +367,7 @@ class ProductRating(models.Model):
         unique_together = ('product', 'user')
 
     def __str__(self):
-        return f"{self.user.username} - {self.rating}⭐ for {self.product.product_name}"
+        return f"{self.user.username} - {self.rating}⭐ - for {self.product.product_name}"
 
 
 # ===========================
@@ -352,8 +375,8 @@ class ProductRating(models.Model):
 # ===========================
 class ServiceRating(models.Model):
     service = models.ForeignKey(Services, on_delete=models.CASCADE, related_name="service_ratings")
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # custom user authentication
+    user_name = models.CharField(max_length=250, blank=False, default='anonymous')
     rating = models.DecimalField(max_digits=2, decimal_places=1, choices=[(i/2, str(i/2)) for i in range(0, 11)])
     review = models.TextField(max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
