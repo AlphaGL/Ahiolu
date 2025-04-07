@@ -48,7 +48,21 @@ INSTALLED_APPS = [
     'django_countries',
     'cities_light',
     'django_filters',
+
+    # cloudinary 
+    'cloudinary',
+    'cloudinary_storage',
 ]
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ddvoehikn',
+    'API_KEY': '319216825934435',
+    'API_SECRET': 'QKRPRV1VZDZVTBUrTvZPceJZ2u8',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
