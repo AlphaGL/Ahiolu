@@ -54,15 +54,13 @@ INSTALLED_APPS = [
     'cloudinary_storage',
 ]
 
-
+# Cloudinary config
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'ddvoehikn',
-    'API_KEY': '319216825934435',
-    'API_SECRET': 'QKRPRV1VZDZVTBUrTvZPceJZ2u8',
+    'CLOUD_NAME': config('CLOUDINARY_URL').split('@')[-1],
+    'API_KEY': config('CLOUDINARY_URL').split('//')[1].split(':')[0],
+    'API_SECRET': config('CLOUDINARY_URL').split(':')[2].split('@')[0],
 }
-
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,7 +97,9 @@ WSGI_APPLICATION = 'master.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASE_URL = config('DATABASE_URL')  # Retrieve DATABASE_URL from environment
+DATABASE_URL = config('DATABASE_URL')
+CLOUDINARY_URL = config('CLOUDINARY_URL')
+  # Retrieve DATABASE_URL from environment
 DATABASES = {
     'default': dj_database_url.parse(DATABASE_URL)  # Parse the URL for database settings
 }
@@ -129,9 +129,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default Django backend
 ]
 
-# PAYSTACK API FOR PAYMENTS
-PAYSTACK_SECRET_KEY = 'sk_test_3e89989f81e42e78b1bce3d756f9da62ff9c8612'
-PAYSTACK_PUBLIC_KEY = 'pk_test_82cbf50854af160f931f8b9e6f9c84af8489536e'
+# Paystack Keys (should ideally be moved to .env)
+PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY', default='sk_test_3e89989f81e42e78b1bce3d756f9da62ff9c8612')
+PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY', default='pk_test_82cbf50854af160f931f8b9e6f9c84af8489536e')
 PAYSTACK_PAYMENT_URL = 'https://api.paystack.co/transaction/initialize'
 
 
