@@ -1,7 +1,7 @@
 from django.db import models
 # from django.contrib.auth.models import User  # For customer ratings
 from django.conf import settings # Custom User Authentication
-
+from cloudinary.models import CloudinaryField
 # ===========================
 #  CATEGORY MODEL (LOCATIONS)
 # ===========================
@@ -277,7 +277,7 @@ class LocationCategory(models.Model):
 class Products(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products",default=1)
     product_name = models.CharField(max_length=100)
-    product_image = models.ImageField(upload_to='product_images/')
+    product_image = CloudinaryField('product_images')
     product_description = models.TextField(max_length=250)
     product_price = models.PositiveIntegerField()
     product_category = models.CharField(max_length=300, choices=LocationCategory.CATEGORY_CHOICES, default="all")
@@ -314,7 +314,7 @@ class Products(models.Model):
 class Services(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="services",default=1)
     service_name = models.CharField(max_length=100)
-    service_image = models.ImageField(upload_to='services_images/')
+    service_image = CloudinaryField('service_images')
     service_description = models.TextField(max_length=250)
     service_category = models.CharField(max_length=300, choices=LocationCategory.CATEGORY_CHOICES, default="all")
     service_country = models.CharField(max_length=50, choices=LocationCategory.COUNTRY_CHOICES, default="All")

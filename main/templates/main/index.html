@@ -119,6 +119,35 @@
             </div>
           </div>
         </div>
+              <!-- Rating Modal -->
+            <div class="modal fade" id="rateProductModal{{ product.id }}" tabindex="-1" 
+            aria-labelledby="rateProductModalLabel{{ product.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-0">
+              <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ product.id }}">
+                ⭐ Rate {{ product.product_name }}
+              </h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              {% if user.is_authenticated %}
+              <p class="text-primary fw-semibold">
+                Please ensure your rating is fair and transparent to help others make informed decisions.
+              </p>
+              <a href="{% url 'product_rate' product.id %}" class="btn btn-primary btn-lg w-100 shadow-sm">
+                Proceed <i class="fas fa-arrow-right"></i>
+              </a>
+              {% else %}
+              <p class="text-danger fw-bold">You must be logged in to submit a rating.</p>
+              <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
+                🔐 Login to Continue
+              </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+            </div>
       {% empty %}
         <p class="text-center text-muted">No products found matching your criteria.</p>
       {% endfor %}
@@ -226,6 +255,35 @@
               <div class="text-center">
                 <button class="btn btn-warning btn-sm w-20" data-bs-toggle="modal" data-bs-target="#rateProductModal{{ service.id }}">⭐ Share Feedback</button>
                 <a href="{% url 'service_reviews' service.id %}" class="btn btn-outline-secondary btn-sm w-20 text-black">⭐ View Reviews</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Rating Modal -->
+        <div class="modal fade" id="rateProductModal{{ service.id }}" tabindex="-1" 
+            aria-labelledby="rateProductModalLabel{{ service.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content shadow-lg rounded-4">
+              <div class="modal-header bg-dark text-white border-0">
+                <h5 class="modal-title fw-bold text-white" id="rateProductModalLabel{{ service.id }}">
+                  ⭐ Rate {{ service.service_name }}
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body text-center">
+                {% if user.is_authenticated %}
+                <p class="text-primary fw-semibold">
+                  Please ensure your rating is fair and transparent to help others make informed decisions.
+                </p>
+                <a href="{% url 'service_rate' service.id %}" class="btn btn-primary btn-lg w-100 shadow-sm">
+                  Proceed <i class="fas fa-arrow-right"></i>
+                </a>
+                {% else %}
+                <p class="text-danger fw-bold">You must be logged in to submit a rating.</p>
+                <a href="{% url 'login' %}" class="btn btn-danger btn-lg w-100 shadow-sm">
+                  🔐 Login to Continue
+                </a>
+                {% endif %}
               </div>
             </div>
           </div>
