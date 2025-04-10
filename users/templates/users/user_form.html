@@ -6,7 +6,7 @@
   <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
     <div class="container position-relative">
       <br><br><br>
-      <h1>Register</h1>
+      <h1>Edit Profile</h1>
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{% url 'home' %}">Home</a></li>
@@ -29,19 +29,12 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit">Update</button>
+                    <button class="btn btn-outline-success" type="submit">Update</button>
                 </form>
             </div>
           </div>
         </div>
       </div>
-              <!-- Footer Section with Styling -->
-              <div class="modal-footer text-center">
-                <div class="d-flex justify-content-between">
-                <span class="text-muted">Have an account? </span> 
-                <a href="{% url 'login' %}" class="text-decoration-none text-danger btn-outline-secondary" style="margin-left: 5px;"> Login</a>
-                </div>
-            </div>
     </div>
   </section>
 </main>
