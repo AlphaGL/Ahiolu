@@ -2,149 +2,163 @@
 {% load static %}
 
 {% block title %}User Dashboard{% endblock %}
+
 {% block content %}
 <main class="main">
 
   <!-- Page Title -->
   <div class="page-title dark-background" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
-    <div class="container position-relative">
-      <h1 class="text-white">User Dashboard</h1>
+    <div class="container position-relative py-5">
+      <h1 class="text-white fw-bold">User Dashboard</h1>
       <nav class="breadcrumbs">
-        <ol>
-          <li><a href="{% url 'home' %}">Home</a></li>
-          <li class="current text-white">Dashboard</li>
+        <ol class="breadcrumb bg-transparent p-0 mb-0">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item active text-white">Dashboard</li>
         </ol>
       </nav>
     </div>
-  </div><!-- End Page Title -->
+  </div>
 
   <!-- Dashboard Content -->
   <div class="container py-5">
+    <div class="row">
 
-    <!-- Section Title -->
-    <div class="section-title text-center" data-aos="fade-up">
-      <h2>Your Products and Services</h2>
-    </div><!-- End Section Title -->
+      <!-- Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="card shadow-lg border-0 text-center p-4 rounded-4">
+          {% if user.profile.image %}
+            <img src="{{ user.profile.url }}" class="rounded-circle shadow mb-3 border" style="width: 100px; height: 100px; object-fit: cover;" alt="User Image">
+          {% else %}
+            <img src="{% static 'assets/img/default-profile.png' %}" class="rounded-circle shadow mb-3 border" style="width: 100px; height: 100px; object-fit: cover;" alt="Default Image">
+          {% endif %}
+          <h5 class="fw-bold">{{ user.get_full_name|default:user.username }}</h5>
+          <p class="text-muted small">{{ user.email }}</p>
+          <hr>
+          <a href="{% url 'product_create' %}" class="btn btn-outline-primary w-100 mb-2">+ New Product</a>
+          <a href="{% url 'service_create' %}" class="btn btn-outline-success w-100 mb-2">+ New Service</a>
+          <hr>
+          <div class="d-flex justify-content-between small">
+            <a href="{% url 'user-update' %}">Edit Profile</a>
+            <a href="{% url 'user-delete' %}" class="text-danger">Delete Account</a>
+          </div>
+        </div>
+      </div>
 
-    <!-- Dashboard Controls -->
-    <div class="row mb-5">
-      <div class="col-md-6">
-        <a href="{% url 'product_create' %}" class="btn btn-primary btn-sm w-100 mb-3 mb-md-0">Create New Product</a>
-        <br>
-        <br>
-        <a href="{% url 'service_create' %}" class="btn btn-secondary btn-sm w-100">Create New Service</a>
+      <!-- Main Content -->
+      <div class="col-lg-9">
+
+        <!-- Section Title -->
+        <div class="text-center mb-5" data-aos="fade-up">
+          <h2 class="fw-bold">Your Products and Services</h2>
+        </div>
+
+        <!-- Tabs -->
+        <div class="text-center mb-4">
+          <button class="btn btn-outline-primary mx-2" id="showProductsBtn" onclick="toggleTab('products')">Products</button>
+          <button class="btn btn-outline-success mx-2" id="showServicesBtn" onclick="toggleTab('services')">Services</button>
+        </div>
+
+        <!-- Products -->
+        <div id="productsSection" class="row g-4">
+          <h4 class="mb-3 text-primary">Products</h4>
+          {% for product in products %}
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4 hover-shadow">
+              <img src="{{ product.product_image.url }}" class="card-img-top rounded-top-4" alt="{{ product.product_name }}" style="height: 180px; object-fit: cover;">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">{{ product.product_name }}</h5>
+                <p class="text-muted small">{{ product.product_description|truncatewords:10 }}</p>
+                <div class="mt-auto d-flex justify-content-between">
+                  <a href="{% url 'product_update' product.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{% url 'product_delete' product.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No products posted yet.</p>
+          {% endfor %}
+
+          <!-- Promoted Products -->
+          <h4 class="mb-3 mt-5 text-warning">Promoted Products</h4>
+          {% for product in promoted_products %}
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4 border border-warning">
+              <img src="{{ product.product_image.url }}" class="card-img-top rounded-top-4" style="height: 180px; object-fit: cover;" alt="{{ product.product_name }}">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold text-warning">{{ product.product_name }}</h5>
+                <p class="text-muted small">{{ product.product_description|truncatewords:10 }}</p>
+                <div class="mt-auto d-flex justify-content-between">
+                  <a href="{% url 'product_update' product.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{% url 'product_delete' product.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No promoted products posted yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Services -->
+        <div id="servicesSection" class="row g-4" style="display: none;">
+          <h4 class="mb-3 text-success">Services</h4>
+          {% for service in services %}
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
+              <img src="{{ service.service_image.url }}" class="card-img-top rounded-top-4" alt="{{ service.service_name }}" style="height: 180px; object-fit: cover;">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold">{{ service.service_name }}</h5>
+                <p class="text-muted small">{{ service.service_description|truncatewords:10 }}</p>
+                <div class="mt-auto d-flex justify-content-between">
+                  <a href="{% url 'service_update' service.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{% url 'service_delete' service.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No services posted yet.</p>
+          {% endfor %}
+
+          <!-- Promoted Services -->
+          <h4 class="mb-3 mt-5 text-warning">Promoted Services</h4>
+          {% for service in promoted_services %}
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm border border-warning rounded-4">
+              <img src="{{ service.service_image.url }}" class="card-img-top rounded-top-4" alt="{{ service.service_name }}" style="height: 180px; object-fit: cover;">
+              <div class="card-body d-flex flex-column">
+                <h5 class="fw-bold text-warning">{{ service.service_name }}</h5>
+                <p class="text-muted small">{{ service.service_description|truncatewords:10 }}</p>
+                <div class="mt-auto d-flex justify-content-between">
+                  <a href="{% url 'service_update' service.id %}" class="btn btn-sm btn-warning">Edit</a>
+                  <a href="{% url 'service_delete' service.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>No promoted services posted yet.</p>
+          {% endfor %}
+        </div>
+
       </div>
     </div>
-
-    <!-- Tabs for Products and Services -->
-    <div class="text-center mb-4">
-      <button class="btn btn-outline-primary mx-2" id="showProductsBtn" onclick="toggleTab('products')">Products</button>
-      <button class="btn btn-outline-success mx-2" id="showServicesBtn" onclick="toggleTab('services')">Services</button>
-    </div>
-
-    <!-- Products List (Initially visible) -->
-    <div id="productsSection" class="row">
-        <h3 class="mb-4 text-primary">Products</h3>
-        {% for product in products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
-            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
-            <div class="card-body p-4">
-              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ product.product_name }}</h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ product.product_description|truncatewords:10 }}</p>
-              <div class="d-flex justify-content-between mt-auto">
-                <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p>No products posted yet.</p>
-        {% endfor %}
-
-        <!-- Promoted Products -->
-        <h3 class="mb-4 text-warning">Promoted Products</h3>
-        {% for product in promoted_products %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
-            <img src="{{ product.product_image.url }}" alt="{{ product.product_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
-            <div class="card-body p-4">
-              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ product.product_name }}</h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ product.product_description|truncatewords:10 }}</p>
-              <div class="d-flex justify-content-between mt-auto">
-                <a href="{% url 'product_update' product.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p>No promoted products posted yet.</p>
-        {% endfor %}
-    </div>
-
-    <!-- Services List (Initially hidden) -->
-    <div id="servicesSection" class="row" style="display: none;">
-        <h3 class="mb-4 text-success">Services</h3>
-        {% for service in services %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
-            <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
-            <div class="card-body p-4">
-              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ service.service_name }}</h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ service.service_description|truncatewords:10 }}</p>
-              <div class="d-flex justify-content-between mt-auto">
-                <a href="{% url 'service_update' service.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'service_delete' service.id %}" class="btn btn-danger btn-sm">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p>No services posted yet.</p>
-        {% endfor %}
-
-        <!-- Promoted Services -->
-        <h3 class="mb-4 text-warning">Promoted Services</h3>
-        {% for service in promoted_services %}
-        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="card shadow-lg border-0 h-100 rounded-lg overflow-hidden">
-            <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="card-img-top" style="object-fit: cover; height: 180px;">
-            <div class="card-body p-4">
-              <h5 class="card-title text-truncate" style="font-size: 1.1rem;">{{ service.service_name }}</h5>
-              <p class="card-text text-muted" style="font-size: 0.9rem;">{{ service.service_description|truncatewords:10 }}</p>
-              <div class="d-flex justify-content-between mt-auto">
-                <a href="{% url 'service_update' service.id %}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="{% url 'service_delete' service.id %}" class="btn btn-danger btn-sm">Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% empty %}
-        <p>No promoted services posted yet.</p>
-        {% endfor %}
-    </div>
-
-  </div><!-- End Dashboard Content -->
-
+  </div>
 </main>
 
-<!-- JavaScript for Tab Toggle -->
+<!-- Toggle Tabs Script -->
 <script>
   function toggleTab(tab) {
+    const products = document.getElementById('productsSection');
+    const services = document.getElementById('servicesSection');
     if (tab === 'products') {
-      document.getElementById('productsSection').style.display = 'block';
-      document.getElementById('servicesSection').style.display = 'none';
-      document.getElementById('showProductsBtn').classList.add('active');
-      document.getElementById('showServicesBtn').classList.remove('active');
+      products.style.display = 'flex';
+      services.style.display = 'none';
     } else {
-      document.getElementById('servicesSection').style.display = 'block';
-      document.getElementById('productsSection').style.display = 'none';
-      document.getElementById('showServicesBtn').classList.add('active');
-      document.getElementById('showProductsBtn').classList.remove('active');
+      services.style.display = 'flex';
+      products.style.display = 'none';
     }
   }
 </script>
-
 {% endblock %}

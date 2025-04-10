@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
-
+from cloudinary.models import CloudinaryField
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, phone, password=None, **extra_fields):
         if not email and not phone:
@@ -19,6 +19,7 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     username = None  # Remove username field
+    profile = CloudinaryField('users/profile')
     email = models.EmailField(unique=True, blank=True, null=True)  # Email can be optional
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)

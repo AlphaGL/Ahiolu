@@ -1,5 +1,5 @@
 from django.contrib.auth.views import LoginView
-from django.views.generic import CreateView
+from django.views.generic import CreateView,DetailView,DeleteView,UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.shortcuts import redirect,render
@@ -9,6 +9,8 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from main.models import Products, Services
+
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 # ===========================
@@ -65,3 +67,28 @@ def user_dashboard(request):
         'promoted_services': promoted_services,
     })
 
+
+# Update own profile
+class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = CustomUser
+    fields = ['first_name', 'last_name', 'email', 'phone', 'profile']
+    template_name = 'users/user_form.html'
+    success_url = reverse_lazy('user_dashboard')  # Change to your dashboard or success page
+
+    def get_object(self):
+        return self.request.user
+
+    def test_func(self):
+        return self.get_object() == self.request.user
+
+# Delete own profile
+class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = CustomUser
+    template_name = 'users/user_confirm_delete.html'
+    success_url = reverse_lazy('home')  # Or redirect to homepage
+
+    def get_object(self):
+        return self.request.user
+
+    def test_func(self):
+        return self.get_object() == self.request.user

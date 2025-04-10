@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserLoginView, RegisterView, logout_user,user_dashboard
+from .views import UserLoginView, RegisterView, logout_user,user_dashboard,UserUpdateView,UserDeleteView
 
 # reset password
 from django.contrib.auth import views as auth_views
@@ -10,6 +10,8 @@ urlpatterns = [
 
     # user dashboard
     path('dashboard/', user_dashboard, name='user_dashboard'),
+    path('profile/edit/', UserUpdateView.as_view(), name='user-update'),
+    path('profile/delete/', UserDeleteView.as_view(), name='user-delete'),
 
     # reset password views
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
