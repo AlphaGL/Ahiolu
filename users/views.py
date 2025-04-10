@@ -9,7 +9,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from main.models import Products, Services
-
+from cloudinary.exceptions import Error as CloudinaryError
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
@@ -71,9 +71,9 @@ def user_dashboard(request):
 # Update own profile
 class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = CustomUser
-    fields = ['first_name', 'last_name', 'email', 'phone', 'profile']
+    fields = ['first_name', 'last_name', 'email', 'phone', 'profile']  # Assuming 'profile' is the image field
     template_name = 'users/user_form.html'
-    success_url = reverse_lazy('user_dashboard')  # Change to your dashboard or success page
+    success_url = reverse_lazy('user_dashboard')
 
     def get_object(self):
         return self.request.user
@@ -81,6 +81,17 @@ class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         return self.get_object() == self.request.user
 
+    def form_valid(self, form):
+        try:
+            response = super().form_valid(form)
+            messages.success(self.request, "Profile updated successfully!")
+            return response
+        except CloudinaryError as e:
+            if "File size too large" in str(e):
+                messages.error(self.request, "The uploaded file exceeds the maximum allowed size. Please upload a smaller image.")
+            else:
+                messages.error(self.request, f"An error occurred: {str(e)}")
+            return self.form_invalid(form)
 # Delete own profile
 class UserDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = CustomUser

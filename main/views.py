@@ -9,7 +9,7 @@ from .filters import LocationCategoryFilter
 from django.contrib import messages
 from .forms import *
 from django.core.exceptions import PermissionDenied
-
+from cloudinary.exceptions import Error as CloudinaryError
 
 from django.contrib.auth.decorators import login_required
 
@@ -190,7 +190,6 @@ class ProductDetailView(DetailView):
         context['rating_count'] = self.object.rating_count()
         return context
 
-
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Products
     context_object_name = 'product'
@@ -204,12 +203,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         product.product_status = 'pending'  # Ensure status is set explicitly
         
         try:
-            product.save()  # Save the service
+            product.save()  # Save the product
             return redirect('pay_product_listing', product_id=product.id)
+        except CloudinaryError as e:  # Catch the Cloudinary file size error
+            form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
+            return self.form_invalid(form)
         except Exception as e:
-            form.add_error(None, f"An error occurred: {str(e)}")  # Add error to form
-            return self.form_invalid(form)  # Handle failure case
-
+            form.add_error(None, f"An error occurred: {str(e)}")  # Add generic error
+            return self.form_invalid(form)
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Products
@@ -234,6 +235,18 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied("You do not have permission to edit this product.")
         return product
 
+    def form_valid(self, form):
+        product = form.save(commit=False)
+        
+        try:
+            product.save()  # Save the product
+            return redirect('pay_product_listing', product_id=product.id)
+        except CloudinaryError as e:  # Catch the Cloudinary file size error
+            form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
+            return self.form_invalid(form)
+        except Exception as e:
+            form.add_error(None, f"An error occurred: {str(e)}")
+            return self.form_invalid(form)
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Products
@@ -329,18 +342,20 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("user_dashboard")
 
     def form_valid(self, form):
-        # Automatically set the user to the currently logged-in user
         form.instance.user = self.request.user
 
         service = form.save(commit=False)  # Prevent immediate save
         service.service_status = 'pending'  # Ensure status is set explicitly
-        
+
         try:
             service.save()  # Save the service
             return redirect('pay_service_listing', service_id=service.id)
+        except CloudinaryError as e:  # Catch the Cloudinary file size error
+            form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
+            return self.form_invalid(form)
         except Exception as e:
-            form.add_error(None, f"An error occurred: {str(e)}")  # Add error to form
-            return self.form_invalid(form)  # Handle failure case
+            form.add_error(None, f"An error occurred: {str(e)}")
+            return self.form_invalid(form)
 
 class ServiceUpdateView(LoginRequiredMixin, UpdateView):
     model = Services
@@ -370,6 +385,18 @@ class ServiceUpdateView(LoginRequiredMixin, UpdateView):
             raise PermissionDenied("You do not have permission to edit this service.")
         return service
 
+    def form_valid(self, form):
+        service = form.save(commit=False)
+        
+        try:
+            service.save()  # Save the service
+            return redirect('pay_service_listing', service_id=service.id)
+        except CloudinaryError as e:  # Catch the Cloudinary file size error
+            form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
+            return self.form_invalid(form)
+        except Exception as e:
+            form.add_error(None, f"An error occurred: {str(e)}")
+            return self.form_invalid(form)
 
 class ServiceDeleteView(LoginRequiredMixin, DeleteView):
     model = Services
