@@ -27,24 +27,24 @@
   <div class="container">
     <div class="row gy-4">
 
-          <!-- Sidebar with Services List -->
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="services-list">
-              <strong>Other Services Offered</strong>
-              <a class="active">{{ service.other_service_a}}</a>
-              <a class="active">{{ service.other_service_b }}</a>
-              <a class="active">{{ service.other_service_c }}</a>
-            </div>
+      <!-- Sidebar with Services List -->
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="services-list">
+          <strong>Other Services Offered</strong>
+          <a class="active">{{ service.other_service_a }}</a>
+          <a class="active">{{ service.other_service_b }}</a>
+          <a class="active">{{ service.other_service_c }}</a>
+        </div>
 
         <h4>About the Service Provider</h4>
-        <p><strong>Name:</strong> {{ service.service_provider_name }} 
-          <!-- {% if service.is_verified %} -->
-            <span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
-                <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
-              </svg>
-            </span>
-          <!-- {% endif %} -->
+        <p><strong>Name:</strong> {{ service.service_provider_name }}
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+              <path
+                d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708" />
+            </svg>
+          </span>
         </p>
         <p><strong>Expertise:</strong> {{ service.service_provider_expertise }}</p>
         <p><strong>Experience:</strong> {{ service.service_provider_experience_year }} year(s)</p>
@@ -54,7 +54,7 @@
         <p><strong>Contact:</strong> {{ service.service_provider_email }}</p>
         {% endif %}
         <p><strong>Overall Rating:</strong> ⭐ {{ service.average_rating|default:"No Rating" }}/5
-        <span class="text-muted small ms-2">({{ service.service_ratings.count|default:0 }} Reviews)</span>
+          <span class="text-muted small ms-2">({{ service.service_ratings.count|default:0 }} Reviews)</span>
         </p>
       </div>
 
@@ -73,20 +73,23 @@
 
         <!-- Additional Images -->
         <div class="service-images mt-3 text-center">
-          <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="img-thumbnail" style="max-width: 250px;">
+          <img src="{{ service.service_image.url }}" alt="{{ service.service_name }}" class="img-thumbnail"
+            style="max-width: 250px;">
         </div>
 
         <!-- How to Get Started -->
         <div class="get-started mt-3">
           <h5 class="fw-bold text-center">How to Get Started</h5>
-          <p class="text-muted small text-center">Reach out via email or contact us directly. We offer the best quality services.</p>
+          <p class="text-muted small text-center">Reach out via email or contact us directly. We offer the best quality
+            services.</p>
         </div>
 
         <!-- Show Contact Button -->
         <div class="contact-section text-center mt-3">
           <button id="showContactBtn" class="btn btn-primary btn-sm px-4">Show Contact</button>
           <!-- Hidden Contact Information -->
-          <div id="contactInfo" class="contact-info mt-2 p-2 bg-light border rounded text-center small" style="display: none;">
+          <div id="contactInfo" class="contact-info mt-2 p-2 bg-light border rounded text-center small"
+            style="display: none;">
             {% if user.is_authenticated %}
             <p class="fw-bold text-dark mb-1">📞 {{ service.service_provider_phone }}</p>
             <p class="fw-bold text-dark mb-0">📧 {{ service.service_provider_email }}</p>
@@ -97,62 +100,113 @@
             </a>
             {% endif %}
           </div>
-          
         </div>
 
-      <!-- JavaScript to Toggle Contact Info -->
-      <script>
-        document.getElementById("showContactBtn").addEventListener("click", function() {
-          var contactDiv = document.getElementById("contactInfo");
-          
-          if (contactDiv.style.display === "none") {
-            contactDiv.style.display = "block";
-            this.innerText = "Hide Contact";
-          } else {
-            contactDiv.style.display = "none";
-            this.innerText = "Show Contact";
+        <!-- Share and Report Section -->
+        <div class="mt-4 text-center">
+          <h6 class="fw-bold">Share This Service</h6>
+          <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank"
+              class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-facebook"></i> 
+            </a>
+
+            <a href="https://wa.me/?text={{ request.build_absolute_uri }}" target="_blank"
+              class="btn btn-sm btn-outline-success">
+              <i class="bi bi-whatsapp"></i> 
+            </a>
+
+            <a href="https://x.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank"
+              class="btn btn-sm btn-outline-dark">
+              <i class="bi bi-twitter-x"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}" target="_blank"
+              class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-linkedin"></i> 
+            </a>
+
+            <a href="https://telegram.me/share/url?url={{ request.build_absolute_uri }}" target="_blank"
+              class="btn btn-sm btn-outline-info">
+              <i class="bi bi-telegram"></i> 
+            </a>
+
+            <a href="mailto:?subject=Check%20this%20service&body=I%20thought%20you%20might%20like%20this:%20{{ request.build_absolute_uri }}"
+              class="btn btn-sm btn-outline-dark">
+              <i class="bi bi-envelope-fill"></i> 
+            </a>
+
+            <a href="https://www.instagram.com/" target="_blank"
+              class="btn btn-sm btn-outline-danger" title="Copy the link and share on Instagram">
+              <i class="bi bi-instagram"></i> 
+            </a>
+
+          </div>
+
+          <!-- Report Button -->
+          <button class="btn btn-outline-danger btn-sm" onclick="reportUnavailable()">
+            🚫 Report as Unavailable
+          </button>
+        </div>
+
+
+        <!-- JavaScript -->
+        <script>
+          document.getElementById("showContactBtn").addEventListener("click", function () {
+            var contactDiv = document.getElementById("contactInfo");
+            if (contactDiv.style.display === "none") {
+              contactDiv.style.display = "block";
+              this.innerText = "Hide Contact";
+            } else {
+              contactDiv.style.display = "none";
+              this.innerText = "Show Contact";
+            }
+          });
+
+          function reportUnavailable() {
+            alert("Thank you for reporting. Our team will look into it.");
           }
-        });
-      </script>
+        </script>
 
-      <!-- Custom Styling -->
-      <style>
-        .service-details-container {
-          background: #fff;
-          padding: 15px;
-          border-radius: 8px;
-          box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
-          max-width: 550px;
-        }
+        <!-- Custom Styling -->
+        <style>
+          .service-details-container {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+            max-width: 550px;
+          }
 
-        .service-main-image img {
-          width: 100%;
-          height: auto;
-          border-radius: 8px;
-        }
+          .service-main-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+          }
 
-        .service-images img {
-          max-width: 200px;
-          height: auto;
-          border-radius: 6px;
-        }
+          .service-images img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 6px;
+          }
 
-        .contact-section .btn {
-          font-size: 0.9rem;
-          padding: 8px 16px;
-        }
+          .contact-section .btn {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+          }
 
-        .contact-info p {
-          font-size: 0.85rem;
-        }
+          .contact-info p {
+            font-size: 0.85rem;
+          }
 
-        .contact-buttons .btn {
-          font-size: 0.85rem;
-          padding: 6px 12px;
-        }
-      </style>
+          .contact-buttons .btn {
+            font-size: 0.85rem;
+            padding: 6px 12px;
+          }
+        </style>
 
-
+      </div>
     </div>
   </div>
 </section>

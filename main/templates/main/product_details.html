@@ -40,54 +40,35 @@
         <div class="product-info">
           <h2 class="fw-bold">{{ product.product_name }}</h2>
 
-
           <!-- Price & Availability -->
-<h3 class="text-success fw-bold">₦{{ product.product_price }}.00</h3>
-<p>
-  <strong>Availability:</strong>
-  <span class="badge bg-success">Available</span>
-</p>
-
-<!-- Fake "Mark as Unavailable" Button -->
-<div class="mt-3">
-  <button id="reportUnavailableBtn" class="btn btn-outline-warning btn-sm">
-    ⚠️ Report as Unavailable
-  </button>
-  <p id="reportUnavailableMessage" class="text-danger mt-2 fw-bold" style="display: none;">
-    {% if user.is_authenticated %}
-    ✅ Thank you! This product has been submitted as unavailable, Our team will look into it.
-    {% else %}
-    You must be logged in to submit report.
-    {% endif %}
-  </p>
-</div>
-
-<!-- JavaScript to Fake Report -->
-<script>
-  document.getElementById("reportUnavailableBtn").addEventListener("click", function() {
-    var reportMessage = document.getElementById("reportUnavailableMessage");
-
-    // Fake loading effect
-    this.innerText = "Reporting...";
-    this.disabled = true;
-
-    setTimeout(() => {
-      this.innerText = "⚠️";
-      reportMessage.style.display = "block";
-    }, 2000); // Fake 2-second processing delay
- 
- });
-</script>
-
-
-          <!-- Rating Stars -->
-          <p><strong>Rating:</strong> 
-                ⭐
-            ({{ product.average_rating|default:"No Rating" }}/5)
-            <span class="text-muted small ms-2">({{ product.product_ratings.count|default:0 }} Reviews)</span>
+          <h3 class="text-success fw-bold">₦{{ product.product_price }}.00</h3>
+          <p>
+            <strong>Availability:</strong>
+            <span class="badge bg-success">Available</span>
           </p>
 
-          <!-- Product Category & Brand -->
+          <!-- Report as Unavailable -->
+          <div class="mt-3">
+            <button id="reportUnavailableBtn" class="btn btn-outline-warning btn-sm">
+              ⚠️ Report as Unavailable
+            </button>
+            <p id="reportUnavailableMessage" class="text-danger mt-2 fw-bold" style="display: none;">
+              {% if user.is_authenticated %}
+              ✅ Thank you! This product has been submitted as unavailable, Our team will look into it.
+              {% else %}
+              You must be logged in to submit report.
+              {% endif %}
+            </p>
+          </div>
+
+          <!-- Rating -->
+          <p><strong>Rating:</strong> 
+                ⭐
+              ({{ product.average_rating|default:"No Rating" }}/5)
+              <span class="text-muted small ms-2">({{ product.product_ratings.count|default:0 }} Reviews)</span>
+          </p>
+
+          <!-- Other Details -->
           <ul class="list-unstyled">
             <li><strong>Category:</strong> {{ product.product_category|default:"Uncategorized" }}</li>
             <br>
@@ -96,14 +77,39 @@
             <li><strong>Location:</strong> 📍 {{ product.product_city }}, {{ product.product_state }}</li>
           </ul>
 
-          <!-- Product Description -->
+          <!-- Description -->
           <h4>About This Product</h4>
           <p>{{ product.product_description }}</p>
 
-          <!-- Show Contact Button (Opens Modal) -->
+          <!-- Show Contact Button -->
           <button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#contactModal">
             Show Contact
           </button>
+
+          <!-- Share Button -->
+          <div class="text-center mt-3">
+            <button class="btn btn-outline-secondary w-100" onclick="toggleShareOptions()">
+              📤 Share Product
+            </button>
+            <div id="shareOptions" class="mt-2 d-none">
+              <a href="https://api.whatsapp.com/send?text={{ request.build_absolute_uri }}" target="_blank" class="me-3 text-success fs-4" title="Share on WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="me-3 text-primary fs-4" title="Share on Facebook">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="https://www.instagram.com/?url={{ request.build_absolute_uri }}" target="_blank" class="me-3 text-danger fs-4" title="Share on Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank" class="me-3 text-info fs-4" title="Share on Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="mailto:?subject=Check out this product&body={{ request.build_absolute_uri }}" class="me-3 text-dark fs-4" title="Share via Email">
+                <i class="fas fa-envelope"></i>
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -128,7 +134,6 @@
           🔐 Login to Continue
         </a>
         {% endif %}
-        <!-- <p><strong>📧 Email:</strong> {{ product.product_provider_email|default:"No Email Available" }}</p> -->
       </div>
     </div>
   </div>
@@ -137,7 +142,24 @@
 
 <!-- JavaScript -->
 <script>
-  // Function to change the main image when a thumbnail is clicked
+  // Report Button Simulation
+  document.getElementById("reportUnavailableBtn").addEventListener("click", function() {
+    var reportMessage = document.getElementById("reportUnavailableMessage");
+    this.innerText = "Reporting...";
+    this.disabled = true;
+    setTimeout(() => {
+      this.innerText = "⚠️";
+      reportMessage.style.display = "block";
+    }, 2000);
+  });
+
+  // Toggle Share Options
+  function toggleShareOptions() {
+    const shareBox = document.getElementById("shareOptions");
+    shareBox.classList.toggle("d-none");
+  }
+
+  // Change Image (if using thumbnails in future)
   function changeMainImage(imgElement) {
     document.getElementById("mainProductImage").src = imgElement.src;
   }
