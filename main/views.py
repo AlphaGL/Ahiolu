@@ -240,7 +240,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         
         try:
             product.save()  # Save the product
-            return redirect('pay_product_listing', product_id=product.id)
+            return redirect('user_dashboard')
         except CloudinaryError as e:  # Catch the Cloudinary file size error
             form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
             return self.form_invalid(form)
@@ -390,7 +390,7 @@ class ServiceUpdateView(LoginRequiredMixin, UpdateView):
         
         try:
             service.save()  # Save the service
-            return redirect('pay_service_listing', service_id=service.id)
+            return redirect('user_dashboard')
         except CloudinaryError as e:  # Catch the Cloudinary file size error
             form.add_error(None, f"File size too large. Maximum allowed size is 10MB. {str(e)}")
             return self.form_invalid(form)
