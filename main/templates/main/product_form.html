@@ -1,6 +1,12 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}Add Product{% endblock %}
+{% block title %}
+  {% if product %}
+    Edit Product
+  {% else %}
+    Add Product
+  {% endif %}
+{% endblock %}
 {% block content %}
 <!-- Page Title -->
 <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
