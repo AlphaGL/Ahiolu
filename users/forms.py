@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'placeholder': 'First name'}))
@@ -13,3 +15,9 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = ['email', 'password1', 'password2', 'first_name', 'last_name', 'phone']
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    def get_users(self, email):
+        UserModel = get_user_model()
+        return UserModel._default_manager.filter(email__iexact=email, is_active=True)
