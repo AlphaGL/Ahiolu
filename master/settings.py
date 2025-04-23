@@ -119,11 +119,13 @@ WSGI_APPLICATION = 'master.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASE_URL = config('DATABASE_URL')
+
 CLOUDINARY_URL = config('CLOUDINARY_URL')
-  # Retrieve DATABASE_URL from environment
+
+DATABASE_URL = config('DATABASE_URL')
+
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL)  # Parse the URL for database settings
+    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
 }
 
 
@@ -207,3 +209,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     api_key = "319216825934435"
 #     api_secret = "QKRPRV1VZDZVTBUrTvZPceJZ2u8"
 # )
+
+
+print("DATABASE_URL:", DATABASE_URL)
