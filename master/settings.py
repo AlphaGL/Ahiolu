@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config  # Make sure this import is at the top
+from decouple import config
 import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,11 +33,11 @@ TEMPLATES_DIRS = os.path.join(BASE_DIR, 'templates')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3d!mws*#79-)db6h5_-t*avp$*726&uj-$_7dxt9tv**z98u*k'
+# For secret key
+SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# For debug
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS =['*']
 
@@ -122,11 +123,26 @@ WSGI_APPLICATION = 'master.wsgi.application'
 
 CLOUDINARY_URL = config('CLOUDINARY_URL')
 
-DATABASE_URL = config('DATABASE_URL')
 
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='postgres://postgres:Ibeawuchi242@db.olfxrtmhucoxyjwepzlw.supabase.co:5432/postgres'
+#     )
+# }
+
+
+
+# For database
 DATABASES = {
-    'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
+
+
+
+
+
 
 
 # Password validation
@@ -211,4 +227,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # )
 
 
-print("DATABASE_URL:", DATABASE_URL)
+# print("DATABASE_URL:", DATABASE_URL)
