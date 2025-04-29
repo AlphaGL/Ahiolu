@@ -16,8 +16,8 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ['email', 'password1', 'password2', 'first_name', 'last_name', 'phone']
 
-
+    
 class CustomPasswordResetForm(PasswordResetForm):
     def get_users(self, email):
-        UserModel = get_user_model()
-        return UserModel._default_manager.filter(email__iexact=email, is_active=True)
+        active_users = CustomUser.objects.filter(email__iexact=email, is_active=True)
+        return (u for u in active_users if u.has_usable_password())
