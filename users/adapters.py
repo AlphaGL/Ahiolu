@@ -1,6 +1,7 @@
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.account.utils import perform_login
 from django.contrib.auth import get_user_model
+import uuid
 
 User = get_user_model()
 
@@ -11,7 +12,7 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
         # Avoid setting blank or duplicate phone numbers
         if not user.phone:
-            user.phone = None  # or generate a dummy unique value if required
+            user.phone = f"google_{uuid.uuid4().hex[:10]}"
 
         return user
 
