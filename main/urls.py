@@ -45,3 +45,15 @@ urlpatterns = [
     path('services/<int:service_id>/pay/', paystack_listing_payment_view, name='pay_service_listing'),
     path('payment/callback/', paystack_callback_view, name='paystack_callback'),
 ]
+
+from django.core.management import call_command
+from django.http import HttpResponse
+
+def run_migrations(request):
+    call_command('migrate')
+    return HttpResponse("Migrations applied.")
+
+urlpatterns = [
+    # ... your other urls
+    path('run-migrations/', run_migrations),
+]

@@ -71,11 +71,13 @@ INSTALLED_APPS = [
     # For Google Authentication
     'allauth',
     'allauth.account',
-        # Optional -- requires install using `django-allauth[socialaccount]`.
+    # Optional -- requires install using `django-allauth[socialaccount]`.
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
 ]
 
+
+SITE_ID = 1
 
 # CLOUDINARY-DJANGO INTEGRATION
 CLOUDINARY_STORAGE = {
