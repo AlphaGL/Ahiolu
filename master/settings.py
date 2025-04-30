@@ -79,6 +79,12 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+
+
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'users.adapters.CustomSocialAccountAdapter'
+
+
 # CLOUDINARY-DJANGO INTEGRATION
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
