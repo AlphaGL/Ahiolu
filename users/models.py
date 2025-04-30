@@ -20,10 +20,10 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     username = None  # Remove username field
     profile = CloudinaryField('users/profile')
-    email = models.EmailField(unique=True)  # Email can be optional
+    email = models.EmailField(unique=True, default="default@example.com")  # Email can be optional
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    phone = models.CharField(max_length=15, unique=True, null=True)
+    phone = models.CharField(max_length=15, unique=True, null=True, blank=True)
 
     objects = CustomUserManager()  # Attach custom manager
 
