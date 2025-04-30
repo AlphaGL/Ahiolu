@@ -11,12 +11,12 @@
   <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
     <div class="container position-relative">
       <br><br><br>
-      <h1>Ahiolu - We aim at Connecting people and Growing Businesses</h1>
-      <p>Access your account and enjoy all our features.</p>
+      <h1>Login</h1>
+      <p>Log in to access your account and enjoy all our features.</p>
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{% url 'home' %}">Home</a></li>
-          <li class="current">Connect Page</li>
+          <li class="current">Login</li>
         </ol>
       </nav>
     </div>
@@ -29,9 +29,14 @@
         <div class="col-lg-7">
           <div class="card shadow-sm border border-secondary">
             <div class="card-header bg-secondary text-white text-center">
-              <h4 class="fw-semibold my-2">Continue with Google</h4>
+              <h4 class="fw-semibold my-2">Sign In to your account</h4>
             </div>
             <div class="card-body px-4 py-4">
+              {% if messages %}
+                {% for message in messages %}
+                  <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
               <div class="google-auth">
                 <style>
                   .google-btn {
@@ -65,7 +70,7 @@
               <div class="google-btn-container">
                 <a href="{% provider_login_url 'google' %}" class="google-btn">
                   <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
-                  <span>Continue with Google (Sign in or Sign up)</span>
+                  <span>Continue with Google</span>
                 </a>
               </div>
               </div>
