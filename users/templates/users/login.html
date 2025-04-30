@@ -11,12 +11,12 @@
   <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
     <div class="container position-relative">
       <br><br><br>
-      <h1>Login</h1>
-      <p>Log in to access your account and enjoy all our features.</p>
+      <h1>Ahiolu - We aim at Connecting people and Growing Businesses</h1>
+      <p>Access your account and enjoy all our features.</p>
       <nav class="breadcrumbs">
         <ol>
           <li><a href="{% url 'home' %}">Home</a></li>
-          <li class="current">Login</li>
+          <li class="current">Connect Page</li>
         </ol>
       </nav>
     </div>
@@ -29,36 +29,9 @@
         <div class="col-lg-7">
           <div class="card shadow-sm border border-secondary">
             <div class="card-header bg-secondary text-white text-center">
-              <h4 class="fw-semibold my-2">Sign In to your account</h4>
+              <h4 class="fw-semibold my-2">Continue with Google</h4>
             </div>
             <div class="card-body px-4 py-4">
-              {% if messages %}
-                {% for message in messages %}
-                  <div class="alert alert-danger">{{ message }}</div>
-                {% endfor %}
-              {% endif %}
-              <!-- <form method="post">
-                {% csrf_token %}
-                <div class="row g-3">
-                  <div class="col-md-12">
-                    <label for="username" class="form-label fw-semibold">Email or Phone Number</label>
-                    <input type="text" name="username" class="form-control" placeholder="Enter email or phone number" required>
-                  </div>
-
-                  <div class="col-md-12">
-                    <label for="password" class="form-label fw-semibold">Password</label>
-                    <input type="password" name="password" class="form-control" placeholder="Enter password" required>
-                  </div>
-
-                  <div class="form-check mt-3">
-                    <input type="checkbox" name="remember_me" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Remember me</label>
-                  </div>
-                </div>
-                <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-dark px-4 py-2">Sign In</button>
-                </div>
-              </form> -->
               <div class="google-auth">
                 <style>
                   .google-btn {
@@ -92,15 +65,9 @@
               <div class="google-btn-container">
                 <a href="{% provider_login_url 'google' %}" class="google-btn">
                   <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo">
-                  <span>Sign in with Google</span>
+                  <span>Continue with Google (Sign in or Sign up)</span>
                 </a>
               </div>
-                      <!-- Footer Section with Styling -->
-                <div class="modal-footer text-center">
-                  <div class="d-flex justify-content-between">
-                  <span class="text-muted" style="margin-left: 10px;">Don't have an account? </span> 
-                  <a href="{% url 'register' %}" class="text-decoration-none text-danger btn-outline-secondary" style="margin-left: 5px;">Register</a>
-                  </div>
               </div>
               </a>              
             </div>
