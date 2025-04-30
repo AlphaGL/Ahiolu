@@ -127,17 +127,17 @@ MIDDLEWARE = [
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': ['email'],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'APP': {
-            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
+    # For Google Authentication
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
 }
 
 
