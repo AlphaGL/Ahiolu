@@ -12,7 +12,8 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
 
         # Avoid setting blank or duplicate phone numbers
         if not user.phone:
-            user.phone = f"google_{uuid.uuid4().hex[:10]}"
+            user.phone = f"g_{uuid.uuid4().hex[:13]}"  # total = 2 + 13 = 15
+
 
         return user
 
