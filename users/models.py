@@ -23,7 +23,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, default="default@example.com")  # Email can be optional
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    phone = models.CharField(max_length=15, unique=True, null=True, blank=True)
+    phone = models.CharField(max_length=35, unique=True, null=True, blank=True)
 
     objects = CustomUserManager()  # Attach custom manager
 
