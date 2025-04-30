@@ -86,6 +86,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 
+SOCIALACCOUNT_ADAPTER = 'users.adapters.CustomSocialAccountAdapter'
 
 
 # CLOUDINARY-DJANGO INTEGRATION
@@ -126,18 +127,19 @@ MIDDLEWARE = [
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
-    # For Google Authentication
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
+    'google': {
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'APP': {
+            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
 }
+
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
