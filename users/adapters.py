@@ -8,6 +8,11 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
     def populate_user(self, request, sociallogin, data):
         user = super().populate_user(request, sociallogin, data)
         user.email = data.get('email')
+
+        # Avoid setting blank or duplicate phone numbers
+        if not user.phone:
+            user.phone = None  # or generate a dummy unique value if required
+
         return user
 
     def pre_social_login(self, request, sociallogin):
