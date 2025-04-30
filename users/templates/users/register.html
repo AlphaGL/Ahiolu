@@ -1,7 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}Register{% endblock %}
 {% block content %}
+
   <!-- Page Title -->
   <div class="page-title dark-background" data-aos="fade" style="background-image: url({% static 'assets/img/page-title-bg.webp' %});">
     <div class="container position-relative">
@@ -90,6 +92,7 @@
                   <button type="submit" class="btn btn-dark px-4 py-2">Register</button>
                 </div>
               </form>
+              <a href="{% provider_login_url 'google' %}">Signup with google</a>
             </div>
           </div>
         </div>

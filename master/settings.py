@@ -56,6 +56,9 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'users.apps.UsersConfig',
 
+
+    # https://youtu.be/GXz2xslhg8E?si=exzcnzs-MEKnkxcY
+
     # Third-party apps
     'django_countries',
     'cities_light',
@@ -64,6 +67,13 @@ INSTALLED_APPS = [
     # cloudinary 
     'cloudinary',
     'cloudinary_storage',
+
+    # For Google Authentication
+    'allauth',
+    'allauth.account',
+        # Optional -- requires install using `django-allauth[socialaccount]`.
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 
@@ -86,6 +96,12 @@ cloudinary.config(
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
+
+    # For Google Authentication
+        # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
+
+    # main middleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -95,6 +111,31 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    # For Google Authentication
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '1044241902003-70pbbhmtkiahlcclhisg74m67u72c4l8.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+
+
+
+
+
+
 
 ROOT_URLCONF = 'master.urls'
 
@@ -167,6 +208,11 @@ AUTH_USER_MODEL = 'users.CustomUser'
 AUTHENTICATION_BACKENDS = [
     'users.auth_backends.EmailOrPhoneBackend',  # Custom backend
     'django.contrib.auth.backends.ModelBackend',  # Default Django backend
+
+    # For Google Authentication
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
 ]
 
 # Paystack Keys (should ideally be moved to .env)
@@ -186,7 +232,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'users/user_dashboard/'
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
