@@ -125,13 +125,12 @@
         <ul>
           <li><a href="{% url 'home' %}" class="active">Home
           </a></li>
+          <hr>
           <li><a href="{% url 'about' %}">About</a></li>
-          <hr style="color: red; height: 10px; background-color: red;">
+          <hr>
           <li><a href="{% url 'service_list' %}">Book Services</a></li>
+          <hr>
           <li><a href="{% url 'product_list' %}">Shop Products</a></li>
-          <!-- <li><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a></li> -->
-          <!-- <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li> -->
-          <!-- <li><a href="#contact">Contact</a></li> -->
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -155,6 +154,7 @@
         <!-- Dropdown Menu -->
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <li><a class="dropdown-item" href="{% url 'user_dashboard' %}"><i class="bi bi-person-lines-fill mx-2"></i>Dashboard</a></li>
+          <hr>
           <li><a class="dropdown-item" href="{% url 'logout' %}"><i class="bi bi-door-open-fill mx-2"></i>Logout</a></li>
         </ul>
       </div>
