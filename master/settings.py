@@ -39,7 +39,7 @@ SECRET_KEY = config('SECRET_KEY')
 # For debug
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS =['*']
+ALLOWED_HOSTS =['www.ahiolu.com', 'ahiolu.com', 'https://ahiolu.com']
 
 
 # Application definition
@@ -186,10 +186,11 @@ CLOUDINARY_URL = config('CLOUDINARY_URL')
 
 
 
-# For database
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
