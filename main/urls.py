@@ -4,7 +4,7 @@ from .views import (
     service_list, ServiceDetailView, ServiceCreateView, ServiceUpdateView, ServiceDeleteView,
     ProductRatingCreateView, ServiceRatingCreateView,HomePageView,
     paystack_callback_view,paystack_listing_payment_view,service_reviews,
-    product_reviews,AboutPageView,TermsAndConditionsPageView,PrivacyPolicyPageView
+    product_reviews,AboutPageView,TermsAndConditionsPageView,PrivacyPolicyPageView,ping_view
 )
 
 urlpatterns = [ 
@@ -39,7 +39,7 @@ urlpatterns = [
 
     path('service/<int:service_id>/reviews/', service_reviews, name='service_reviews'),
 
-
+    path('ping/', ping_view, name='ping'),
     # Paystack URLs
     path('products/<int:product_id>/pay/', paystack_listing_payment_view, name='pay_product_listing'),
     path('services/<int:service_id>/pay/', paystack_listing_payment_view, name='pay_service_listing'),
