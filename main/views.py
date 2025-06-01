@@ -22,12 +22,15 @@ from django.views.decorators.http import require_GET
 from django.conf import settings
 from django.views import View
 import logging
-
+from django.http import JsonResponse
 
 
 # ===========================
 # HOME PAGE
 # ===========================
+
+def ping_view(request):
+    return JsonResponse({"status": "OK"})
 
 
 class HomePageView(TemplateView):
